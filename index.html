@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReqFlow - Gerenciamento de Requisitos</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- jsPDF para exportação PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+
+    <!-- SheetJS para exportação Excel -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+
+    <!-- Vis.js para grafo de dependências -->
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+
+    <!-- Marked.js para Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- Heroicons (via Iconify) -->
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+
+    <!-- Ant Design Colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#e6f7ff',
+                            100: '#bae7ff',
+                            200: '#91d5ff',
+                            300: '#69c0ff',
+                            400: '#40a9ff',
+                            500: '#1890ff',
+                            600: '#096dd9',
+                            700: '#0050b3',
+                            800: '#003a8c',
+                            900: '#002766'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-50 font-sans">
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed left-0 top-0 h-screen w-64 bg-white border-r border-gray-200 z-40">
+        <div class="p-6 border-b border-gray-200">
+            <h1 class="text-2xl font-bold text-blue-600">ReqFlow</h1>
+            <p class="text-xs text-gray-500 mt-1">Gerenciamento de Requisitos</p>
+        </div>
+
+        <nav class="p-4">
+            <button onclick="navigateTo('dashboard')" class="nav-item active w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors" data-section="dashboard">
+                <span class="iconify text-xl" data-icon="mdi:view-dashboard"></span>
+                <span>Dashboard</span>
+            </button>
+            <button onclick="navigateTo('requisitos')" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors" data-section="requisitos">
+                <span class="iconify text-xl" data-icon="mdi:file-document-multiple"></span>
+                <span>Requisitos</span>
+            </button>
+            <button onclick="navigateTo('kanban')" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors" data-section="kanban">
+                <span class="iconify text-xl" data-icon="mdi:view-column"></span>
+                <span>Kanban</span>
+            </button>
+            <button onclick="navigateTo('colaboracao')" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors" data-section="colaboracao">
+                <span class="iconify text-xl" data-icon="mdi:account-group"></span>
+                <span>Colaboração</span>
+            </button>
+            <button onclick="navigateTo('timeline')" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors" data-section="timeline">
+                <span class="iconify text-xl" data-icon="mdi:timeline-clock"></span>
+                <span>Timeline</span>
+            </button>
+            <button onclick="navigateTo('matriz')" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors" data-section="matriz">
+                <span class="iconify text-xl" data-icon="mdi:grid"></span>
+                <span>Matriz Rastreabilidade</span>
+            </button>
+            <button onclick="navigateTo('dependencias')" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors" data-section="dependencias">
+                <span class="iconify text-xl" data-icon="mdi:graph"></span>
+                <span>Dependências</span>
+            </button>
+            <button onclick="navigateTo('templates')" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors" data-section="templates">
+                <span class="iconify text-xl" data-icon="mdi:file-document-edit"></span>
+                <span>Templates</span>
+            </button>
+            <button onclick="navigateTo('documentacao')" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors" data-section="documentacao">
+                <span class="iconify text-xl" data-icon="mdi:book-open-variant"></span>
+                <span>Documentação</span>
+            </button>
+            <button onclick="navigateTo('auditoria')" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors" data-section="auditoria">
+                <span class="iconify text-xl" data-icon="mdi:history"></span>
+                <span>Auditoria</span>
+            </button>
+            <button onclick="navigateTo('configuracoes')" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors" data-section="configuracoes">
+                <span class="iconify text-xl" data-icon="mdi:cog"></span>
+                <span>Configurações</span>
+            </button>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="ml-64">
+        <!-- Header -->
+        <header class="bg-white border-b border-gray-200 sticky top-0 z-30">
+            <div class="flex items-center justify-between px-8 py-4">
+                <div class="flex-1 max-w-xl">
+                    <div class="relative">
+                        <input type="text" id="globalSearch" placeholder="Buscar em tudo..."
+                               class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <span class="iconify absolute left-3 top-2.5 text-gray-400" data-icon="mdi:magnify"></span>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 ml-6">
+                    <button onclick="showImportModal()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2">
+                        <span class="iconify" data-icon="mdi:upload"></span>
+                        Importar
+                    </button>
+                    <button onclick="showExportModal()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
+                        <span class="iconify" data-icon="mdi:download"></span>
+                        Exportar
+                    </button>
+                    <button onclick="toggleNotifications()" class="relative p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                        <span class="iconify text-xl" data-icon="mdi:bell"></span>
+                        <span id="notificationBadge" class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </button>
+                    <div class="flex items-center gap-2 ml-2">
+                        <img src="https://ui-avatars.com/api/?name=Usuario+Admin&background=3b82f6&color=fff"
+                             alt="Avatar" class="w-8 h-8 rounded-full">
+                        <span class="text-sm font-medium text-gray-700">Usuário Admin</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content Area -->
+        <div class="p-8">
+
+            <!-- Dashboard Section -->
+            <section id="section-dashboard" class="section-content">
+                <div class="mb-6">
+                    <h2 class="text-3xl font-bold text-gray-800">Dashboard</h2>
+                    <p class="text-gray-600 mt-1">Visão geral do projeto</p>
+                </div>
+
+                <!-- Métricas -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600">Total de Requisitos</p>
+                                <p class="text-3xl font-bold text-gray-800 mt-2" id="totalRequisitos">0</p>
+                            </div>
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <span class="iconify text-2xl text-blue-600" data-icon="mdi:file-document"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600">Alta Prioridade</p>
+                                <p class="text-3xl font-bold text-red-600 mt-2" id="altaPrioridade">0</p>
+                            </div>
+                            <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                                <span class="iconify text-2xl text-red-600" data-icon="mdi:alert-circle"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600">Tarefas Kanban</p>
+                                <p class="text-3xl font-bold text-green-600 mt-2" id="totalTarefas">0</p>
+                            </div>
+                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                                <span class="iconify text-2xl text-green-600" data-icon="mdi:check-circle"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600">Cobertura de Testes</p>
+                                <p class="text-3xl font-bold text-purple-600 mt-2" id="coberturaTestes">0%</p>
+                            </div>
+                            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                                <span class="iconify text-2xl text-purple-600" data-icon="mdi:test-tube"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gráficos -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Requisitos por Tipo</h3>
+                        <canvas id="chartTipos"></canvas>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Requisitos por Prioridade</h3>
+                        <canvas id="chartPrioridades"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Requisitos Section -->
+            <section id="section-requisitos" class="section-content hidden">
+                <div class="mb-6 flex items-center justify-between">
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800">Requisitos</h2>
+                        <p class="text-gray-600 mt-1">Gerencie todos os requisitos do projeto</p>
+                    </div>
+                    <button onclick="showRequisitoModal()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
+                        <span class="iconify" data-icon="mdi:plus"></span>
+                        Novo Requisito
+                    </button>
+                </div>
+
+                <!-- Filtros -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 mb-6">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <input type="text" id="filtroTitulo" placeholder="Buscar por título..."
+                               class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+
+                        <select id="filtroTipo" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="">Todos os tipos</option>
+                            <option value="RF">Funcional (RF)</option>
+                            <option value="RNF">Não Funcional (RNF)</option>
+                        </select>
+
+                        <select id="filtroPrioridade" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="">Todas as prioridades</option>
+                            <option value="Alta">Alta</option>
+                            <option value="Média">Média</option>
+                            <option value="Baixa">Baixa</option>
+                        </select>
+
+                        <button onclick="aplicarFiltros()" class="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-colors">
+                            Filtrar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Lista de Requisitos -->
+                <div id="listaRequisitos" class="space-y-4">
+                    <!-- Requisitos serão inseridos aqui via JS -->
+                </div>
+            </section>
+
+            <!-- Kanban Section -->
+            <section id="section-kanban" class="section-content hidden">
+                <div class="mb-6">
+                    <h2 class="text-3xl font-bold text-gray-800">Quadro Kanban</h2>
+                    <p class="text-gray-600 mt-1">Gerencie o fluxo de trabalho</p>
+                </div>
+
+                <div class="flex gap-6 overflow-x-auto pb-4">
+                    <!-- Backlog -->
+                    <div class="flex-shrink-0 w-80">
+                        <div class="bg-gray-100 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-semibold text-gray-800">Backlog</h3>
+                                <span class="text-sm text-gray-600 bg-white px-2 py-1 rounded" id="countBacklog">0</span>
+                            </div>
+                            <div id="columnBacklog" class="kanban-column space-y-3 min-h-32" data-column="backlog">
+                                <!-- Cards serão inseridos aqui -->
+                            </div>
+                            <button onclick="showTarefaModal('backlog')" class="w-full mt-3 py-2 border-2 border-dashed border-gray-300 rounded-lg text-gray-600 hover:border-gray-400 hover:text-gray-800 transition-colors">
+                                + Adicionar Tarefa
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Em Progresso -->
+                    <div class="flex-shrink-0 w-80">
+                        <div class="bg-blue-50 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-semibold text-gray-800">Em Progresso</h3>
+                                <span class="text-sm text-gray-600 bg-white px-2 py-1 rounded" id="countProgresso">0</span>
+                            </div>
+                            <div id="columnProgresso" class="kanban-column space-y-3 min-h-32" data-column="progresso">
+                                <!-- Cards serão inseridos aqui -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Revisão -->
+                    <div class="flex-shrink-0 w-80">
+                        <div class="bg-yellow-50 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-semibold text-gray-800">Em Revisão</h3>
+                                <span class="text-sm text-gray-600 bg-white px-2 py-1 rounded" id="countRevisao">0</span>
+                            </div>
+                            <div id="columnRevisao" class="kanban-column space-y-3 min-h-32" data-column="revisao">
+                                <!-- Cards serão inseridos aqui -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Concluído -->
+                    <div class="flex-shrink-0 w-80">
+                        <div class="bg-green-50 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-semibold text-gray-800">Concluído</h3>
+                                <span class="text-sm text-gray-600 bg-white px-2 py-1 rounded" id="countConcluido">0</span>
+                            </div>
+                            <div id="columnConcluido" class="kanban-column space-y-3 min-h-32" data-column="concluido">
+                                <!-- Cards serão inseridos aqui -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Matriz de Rastreabilidade Section -->
+            <section id="section-matriz" class="section-content hidden">
+                <div class="mb-6">
+                    <h2 class="text-3xl font-bold text-gray-800">Matriz de Rastreabilidade</h2>
+                    <p class="text-gray-600 mt-1">Visualize relações entre requisitos e testes</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-auto">
+                    <table id="matrizRastreabilidade" class="w-full">
+                        <!-- Matriz será gerada via JS -->
+                    </table>
+                </div>
+            </section>
+
+            <!-- Dependências Section -->
+            <section id="section-dependencias" class="section-content hidden">
+                <div class="mb-6">
+                    <h2 class="text-3xl font-bold text-gray-800">Grafo de Dependências</h2>
+                    <p class="text-gray-600 mt-1">Visualize as relações entre requisitos</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <div id="network" style="height: 600px;"></div>
+                </div>
+            </section>
+
+            <!-- Documentação Section -->
+            <section id="section-documentacao" class="section-content hidden">
+                <div class="mb-6 flex items-center justify-between">
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800">Documentação</h2>
+                        <p class="text-gray-600 mt-1">Wiki e documentos do projeto</p>
+                    </div>
+                    <button onclick="showDocumentoModal()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
+                        <span class="iconify" data-icon="mdi:plus"></span>
+                        Novo Documento
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Lista de documentos -->
+                    <div class="lg:col-span-1 bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+                        <h3 class="font-semibold text-gray-800 mb-4">Documentos</h3>
+                        <div id="listaDocumentos" class="space-y-2">
+                            <!-- Documentos serão listados aqui -->
+                        </div>
+                    </div>
+
+                    <!-- Visualizador de documento -->
+                    <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <div id="documentoViewer">
+                            <div class="text-center text-gray-400 py-12">
+                                <span class="iconify text-6xl mb-4" data-icon="mdi:file-document-outline"></span>
+                                <p>Selecione um documento para visualizar</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Auditoria Section -->
+            <section id="section-auditoria" class="section-content hidden">
+                <div class="mb-6">
+                    <h2 class="text-3xl font-bold text-gray-800">Log de Auditoria</h2>
+                    <p class="text-gray-600 mt-1">Histórico completo de ações do sistema</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50 border-b border-gray-200">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Data/Hora</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Usuário</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ação</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Entidade</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Detalhes</th>
+                                </tr>
+                            </thead>
+                            <tbody id="auditoriaTableBody" class="divide-y divide-gray-200">
+                                <!-- Logs serão inseridos aqui -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Configurações Section -->
+            <section id="section-configuracoes" class="section-content hidden">
+                <div class="mb-6">
+                    <h2 class="text-3xl font-bold text-gray-800">Configurações</h2>
+                    <p class="text-gray-600 mt-1">Gerencie templates e configurações do sistema</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Usuários -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Usuários do Sistema</h3>
+                        <div id="listaUsuarios" class="space-y-3">
+                            <!-- Usuários serão listados aqui -->
+                        </div>
+                        <button onclick="showUsuarioModal()" class="w-full mt-4 py-2 border-2 border-dashed border-gray-300 rounded-lg text-gray-600 hover:border-gray-400 hover:text-gray-800 transition-colors">
+                            + Adicionar Usuário
+                        </button>
+                    </div>
+
+                    <!-- Permissões e Preferências -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Preferências</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-700">Notificações em tempo real</span>
+                                    <input type="checkbox" checked class="w-5 h-5 text-blue-600 rounded focus:ring-2 focus:ring-blue-500">
+                                </label>
+                            </div>
+                            <div>
+                                <label class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-700">Auto-salvar mudanças</span>
+                                    <input type="checkbox" checked class="w-5 h-5 text-blue-600 rounded focus:ring-2 focus:ring-blue-500">
+                                </label>
+                            </div>
+                            <div>
+                                <label class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-700">Modo escuro</span>
+                                    <input type="checkbox" class="w-5 h-5 text-blue-600 rounded focus:ring-2 focus:ring-blue-500">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Colaboração Section -->
+            <section id="section-colaboracao" class="section-content hidden">
+                <div class="mb-6">
+                    <h2 class="text-3xl font-bold text-gray-800">Colaboração & Negociação</h2>
+                    <p class="text-gray-600 mt-1">Comunique-se com a equipe em tempo real</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Feed de Atividades -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">Feed de Atividades</h3>
+                            <div id="feedAtividades" class="space-y-4 max-h-96 overflow-y-auto">
+                                <!-- Atividades serão inseridas aqui -->
+                            </div>
+                        </div>
+
+                        <!-- Discussões Ativas -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-lg font-semibold text-gray-800">Discussões Ativas</h3>
+                                <button onclick="showDiscussaoModal()" class="px-3 py-1 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700">
+                                    + Nova Discussão
+                                </button>
+                            </div>
+                            <div id="listaDiscussoes" class="space-y-3">
+                                <!-- Discussões serão inseridas aqui -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Painel Lateral -->
+                    <div class="space-y-6">
+                        <!-- Equipe Online -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">Equipe Online</h3>
+                            <div id="equipeOnline" class="space-y-3">
+                                <!-- Usuários online serão listados aqui -->
+                            </div>
+                        </div>
+
+                        <!-- Atalhos Rápidos -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">Atalhos</h3>
+                            <div class="space-y-2">
+                                <button onclick="navigateTo('requisitos')" class="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                                    📋 Ver Requisitos
+                                </button>
+                                <button onclick="navigateTo('kanban')" class="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                                    📊 Ver Kanban
+                                </button>
+                                <button onclick="showExportModal()" class="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                                    💾 Exportar Dados
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Timeline Section -->
+            <section id="section-timeline" class="section-content hidden">
+                <div class="mb-6">
+                    <h2 class="text-3xl font-bold text-gray-800">Timeline do Projeto</h2>
+                    <p class="text-gray-600 mt-1">Visualize marcos e progresso ao longo do tempo</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <div class="flex items-center gap-4 mb-6">
+                        <button onclick="renderTimeline('mes')" id="btnTimelineMes" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            Mês
+                        </button>
+                        <button onclick="renderTimeline('trimestre')" id="btnTimelineTrimestre" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
+                            Trimestre
+                        </button>
+                        <button onclick="renderTimeline('ano')" id="btnTimelineAno" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
+                            Ano
+                        </button>
+                        <div class="flex-1"></div>
+                        <button onclick="showMilestoneModal()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center gap-2">
+                            <span class="iconify" data-icon="mdi:flag"></span>
+                            Novo Marco
+                        </button>
+                    </div>
+
+                    <div id="timelineContainer" class="relative">
+                        <!-- Timeline será renderizada aqui -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Templates Section -->
+            <section id="section-templates" class="section-content hidden">
+                <div class="mb-6 flex items-center justify-between">
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800">Templates de Requisitos</h2>
+                        <p class="text-gray-600 mt-1">Padronize a criação de requisitos</p>
+                    </div>
+                    <button onclick="showTemplateModal()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
+                        <span class="iconify" data-icon="mdi:plus"></span>
+                        Novo Template
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div id="gridTemplates">
+                        <!-- Templates serão inseridos aqui -->
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Modal Requisito -->
+    <div id="modalRequisito" class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-gray-200 flex items-center justify-between sticky top-0 bg-white">
+                <h3 class="text-xl font-bold text-gray-800" id="modalRequisitoTitle">Novo Requisito</h3>
+                <button onclick="closeModal('modalRequisito')" class="text-gray-400 hover:text-gray-600">
+                    <span class="iconify text-2xl" data-icon="mdi:close"></span>
+                </button>
+            </div>
+
+            <div class="p-6">
+                <form id="formRequisito" class="space-y-4">
+                    <input type="hidden" id="requisitoId">
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">ID do Requisito</label>
+                        <input type="text" id="requisitoIdCustom" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                               placeholder="Ex: RF001, RNF001">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Título</label>
+                        <input type="text" id="requisitoTitulo" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                               placeholder="Digite o título do requisito">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Descrição</label>
+                        <textarea id="requisitoDescricao" rows="4" required
+                                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                  placeholder="Descreva o requisito detalhadamente"></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Tipo</label>
+                            <select id="requisitoTipo" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                <option value="RF">Funcional (RF)</option>
+                                <option value="RNF">Não Funcional (RNF)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Prioridade</label>
+                            <select id="requisitoPrioridade" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                <option value="Alta">Alta</option>
+                                <option value="Média">Média</option>
+                                <option value="Baixa">Baixa</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                        <select id="requisitoStatus" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="Proposto">Proposto</option>
+                            <option value="Aprovado">Aprovado</option>
+                            <option value="Em Desenvolvimento">Em Desenvolvimento</option>
+                            <option value="Implementado">Implementado</option>
+                            <option value="Validado">Validado</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Dependências (IDs separados por vírgula)</label>
+                        <input type="text" id="requisitoDependencias"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                               placeholder="Ex: RF001, RF002">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Tags (separadas por vírgula)</label>
+                        <input type="text" id="requisitoTags"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                               placeholder="Ex: interface, usuário, autenticação">
+                    </div>
+
+                    <div id="justificativaContainer" class="hidden">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Justificativa da Alteração *</label>
+                        <textarea id="requisitoJustificativa" rows="3"
+                                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                  placeholder="Explique por que este requisito está sendo modificado"></textarea>
+                    </div>
+
+                    <div class="flex justify-end gap-3 pt-4 border-t border-gray-200">
+                        <button type="button" onclick="closeModal('modalRequisito')"
+                                class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            Salvar Requisito
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Tarefa Kanban -->
+    <div id="modalTarefa" class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full">
+            <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                <h3 class="text-xl font-bold text-gray-800">Nova Tarefa</h3>
+                <button onclick="closeModal('modalTarefa')" class="text-gray-400 hover:text-gray-600">
+                    <span class="iconify text-2xl" data-icon="mdi:close"></span>
+                </button>
+            </div>
+
+            <div class="p-6">
+                <form id="formTarefa" class="space-y-4">
+                    <input type="hidden" id="tarefaColuna">
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Título</label>
+                        <input type="text" id="tarefaTitulo" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Descrição</label>
+                        <textarea id="tarefaDescricao" rows="3"
+                                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Prioridade</label>
+                            <select id="tarefaPrioridade" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                <option value="Alta">Alta</option>
+                                <option value="Média">Média</option>
+                                <option value="Baixa">Baixa</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Responsável</label>
+                            <input type="text" id="tarefaResponsavel"
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Requisitos Vinculados</label>
+                        <input type="text" id="tarefaRequisitos"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                               placeholder="Ex: RF001, RF002">
+                    </div>
+
+                    <div class="flex justify-end gap-3 pt-4 border-t border-gray-200">
+                        <button type="button" onclick="closeModal('modalTarefa')"
+                                class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            Criar Tarefa
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Documento -->
+    <div id="modalDocumento" class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-gray-200 flex items-center justify-between sticky top-0 bg-white">
+                <h3 class="text-xl font-bold text-gray-800">Novo Documento</h3>
+                <button onclick="closeModal('modalDocumento')" class="text-gray-400 hover:text-gray-600">
+                    <span class="iconify text-2xl" data-icon="mdi:close"></span>
+                </button>
+            </div>
+
+            <div class="p-6">
+                <form id="formDocumento" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Título</label>
+                        <input type="text" id="documentoTitulo" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Conteúdo (Markdown)</label>
+                        <textarea id="documentoConteudo" rows="12" required
+                                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 font-mono text-sm"></textarea>
+                        <p class="text-xs text-gray-500 mt-1">Suporta Markdown para formatação</p>
+                    </div>
+
+                    <div class="flex justify-end gap-3 pt-4 border-t border-gray-200">
+                        <button type="button" onclick="closeModal('modalDocumento')"
+                                class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            Salvar Documento
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Exportar -->
+    <div id="modalExportar" class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-md w-full">
+            <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                <h3 class="text-xl font-bold text-gray-800">Exportar Dados</h3>
+                <button onclick="closeModal('modalExportar')" class="text-gray-400 hover:text-gray-600">
+                    <span class="iconify text-2xl" data-icon="mdi:close"></span>
+                </button>
+            </div>
+
+            <div class="p-6">
+                <p class="text-gray-600 mb-4">Selecione o formato de exportação:</p>
+
+                <div class="space-y-3">
+                    <button onclick="exportarProjetoCompleto()" class="w-full flex items-center justify-between p-4 border-2 border-blue-500 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
+                        <div class="flex items-center gap-3">
+                            <span class="iconify text-2xl text-blue-600" data-icon="mdi:package-variant-closed"></span>
+                            <div class="text-left">
+                                <span class="font-semibold text-blue-900">Projeto Completo (JSON)</span>
+                                <p class="text-xs text-blue-700">Todos os dados serializados</p>
+                            </div>
+                        </div>
+                        <span class="iconify text-blue-600" data-icon="mdi:chevron-right"></span>
+                    </button>
+
+                    <button onclick="exportarPDF()" class="w-full flex items-center justify-between p-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                        <div class="flex items-center gap-3">
+                            <span class="iconify text-2xl text-red-600" data-icon="mdi:file-pdf-box"></span>
+                            <span class="font-medium">PDF</span>
+                        </div>
+                        <span class="iconify text-gray-400" data-icon="mdi:chevron-right"></span>
+                    </button>
+
+                    <button onclick="exportarExcel()" class="w-full flex items-center justify-between p-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                        <div class="flex items-center gap-3">
+                            <span class="iconify text-2xl text-green-600" data-icon="mdi:file-excel-box"></span>
+                            <span class="font-medium">Excel</span>
+                        </div>
+                        <span class="iconify text-gray-400" data-icon="mdi:chevron-right"></span>
+                    </button>
+
+                    <button onclick="exportarCSV()" class="w-full flex items-center justify-between p-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                        <div class="flex items-center gap-3">
+                            <span class="iconify text-2xl text-blue-600" data-icon="mdi:file-delimited"></span>
+                            <span class="font-medium">CSV</span>
+                        </div>
+                        <span class="iconify text-gray-400" data-icon="mdi:chevron-right"></span>
+                    </button>
+
+                    <button onclick="exportarJSON()" class="w-full flex items-center justify-between p-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                        <div class="flex items-center gap-3">
+                            <span class="iconify text-2xl text-yellow-600" data-icon="mdi:code-json"></span>
+                            <span class="font-medium">JSON (Requisitos)</span>
+                        </div>
+                        <span class="iconify text-gray-400" data-icon="mdi:chevron-right"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Importar -->
+    <div id="modalImportar" class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-md w-full">
+            <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                <h3 class="text-xl font-bold text-gray-800">Importar Dados</h3>
+                <button onclick="closeModal('modalImportar')" class="text-gray-400 hover:text-gray-600">
+                    <span class="iconify text-2xl" data-icon="mdi:close"></span>
+                </button>
+            </div>
+
+            <div class="p-6">
+                <p class="text-gray-600 mb-4">Selecione um arquivo para importar:</p>
+
+                <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-500 transition-colors cursor-pointer" onclick="document.getElementById('fileInput').click()">
+                    <span class="iconify text-5xl text-gray-400 mb-2" data-icon="mdi:cloud-upload"></span>
+                    <p class="text-sm text-gray-600">Clique para selecionar arquivo</p>
+                    <p class="text-xs text-gray-500 mt-1">CSV, Excel ou JSON</p>
+                    <input type="file" id="fileInput" class="hidden" accept=".csv,.xlsx,.xls,.json" onchange="handleFileImport(event)">
+                </div>
+
+                <div id="importPreview" class="mt-4 hidden">
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <p class="text-sm font-medium text-gray-700 mb-2">Arquivo selecionado:</p>
+                        <p class="text-sm text-gray-600" id="fileName"></p>
+                        <button onclick="processImport()" class="mt-4 w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            Importar Dados
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Template -->
+    <div id="modalTemplate" class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full">
+            <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                <h3 class="text-xl font-bold text-gray-800">Novo Template</h3>
+                <button onclick="closeModal('modalTemplate')" class="text-gray-400 hover:text-gray-600">
+                    <span class="iconify text-2xl" data-icon="mdi:close"></span>
+                </button>
+            </div>
+
+            <div class="p-6">
+                <form id="formTemplate" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nome do Template</label>
+                        <input type="text" id="templateNome" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Descrição</label>
+                        <textarea id="templateDescricao" rows="2"
+                                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Tipo Padrão</label>
+                        <select id="templateTipo" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="RF">Funcional (RF)</option>
+                            <option value="RNF">Não Funcional (RNF)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Estrutura do Template</label>
+                        <textarea id="templateEstrutura" rows="6" placeholder="Ex: ## Objetivo&#10;Descreva o objetivo...&#10;&#10;## Critérios de Aceitação&#10;- Critério 1&#10;- Critério 2"
+                                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 font-mono text-sm"></textarea>
+                    </div>
+
+                    <div class="flex justify-end gap-3 pt-4 border-t border-gray-200">
+                        <button type="button" onclick="closeModal('modalTemplate')"
+                                class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            Criar Template
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Marco (Milestone) -->
+    <div id="modalMilestone" class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full">
+            <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                <h3 class="text-xl font-bold text-gray-800">Novo Marco do Projeto</h3>
+                <button onclick="closeModal('modalMilestone')" class="text-gray-400 hover:text-gray-600">
+                    <span class="iconify text-2xl" data-icon="mdi:close"></span>
+                </button>
+            </div>
+
+            <div class="p-6">
+                <form id="formMilestone" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Título do Marco</label>
+                        <input type="text" id="milestoneTitulo" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Descrição</label>
+                        <textarea id="milestoneDescricao" rows="3"
+                                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Data Prevista</label>
+                            <input type="date" id="milestoneData" required
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                            <select id="milestoneStatus" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                <option value="Pendente">Pendente</option>
+                                <option value="Em Progresso">Em Progresso</option>
+                                <option value="Concluído">Concluído</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Requisitos Relacionados</label>
+                        <input type="text" id="milestoneRequisitos"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                               placeholder="Ex: RF001, RF002, RF003">
+                    </div>
+
+                    <div class="flex justify-end gap-3 pt-4 border-t border-gray-200">
+                        <button type="button" onclick="closeModal('modalMilestone')"
+                                class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                            Criar Marco
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Discussão -->
+    <div id="modalDiscussao" class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full">
+            <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                <h3 class="text-xl font-bold text-gray-800">Nova Discussão</h3>
+                <button onclick="closeModal('modalDiscussao')" class="text-gray-400 hover:text-gray-600">
+                    <span class="iconify text-2xl" data-icon="mdi:close"></span>
+                </button>
+            </div>
+
+            <div class="p-6">
+                <form id="formDiscussao" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Título da Discussão</label>
+                        <input type="text" id="discussaoTitulo" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Mensagem</label>
+                        <textarea id="discussaoMensagem" rows="4" required
+                                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Requisito Relacionado (opcional)</label>
+                        <select id="discussaoRequisito" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="">Nenhum</option>
+                            <!-- Será preenchido dinamicamente -->
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Mencionar Usuários</label>
+                        <input type="text" id="discussaoMencoes"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                               placeholder="Digite @ para mencionar">
+                    </div>
+
+                    <div class="flex justify-end gap-3 pt-4 border-t border-gray-200">
+                        <button type="button" onclick="closeModal('modalDiscussao')"
+                                class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            Publicar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Usuário -->
+    <div id="modalUsuario" class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-md w-full">
+            <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                <h3 class="text-xl font-bold text-gray-800">Adicionar Usuário</h3>
+                <button onclick="closeModal('modalUsuario')" class="text-gray-400 hover:text-gray-600">
+                    <span class="iconify text-2xl" data-icon="mdi:close"></span>
+                </button>
+            </div>
+
+            <div class="p-6">
+                <form id="formUsuario" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nome</label>
+                        <input type="text" id="usuarioNome" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                        <input type="email" id="usuarioEmail" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Papel</label>
+                        <select id="usuarioPapel" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="Gerente">Gerente</option>
+                            <option value="Analista">Analista</option>
+                            <option value="Desenvolvedor">Desenvolvedor</option>
+                            <option value="Testador">Testador</option>
+                            <option value="Stakeholder">Stakeholder</option>
+                        </select>
+                    </div>
+
+                    <div class="flex justify-end gap-3 pt-4 border-t border-gray-200">
+                        <button type="button" onclick="closeModal('modalUsuario')"
+                                class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            Adicionar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Panel (slide-in) -->
+    <div id="notificationPanel" class="fixed right-0 top-0 h-screen w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50 flex flex-col">
+        <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+            <h3 class="text-xl font-bold text-gray-800">Notificações</h3>
+            <button onclick="toggleNotifications()" class="text-gray-400 hover:text-gray-600">
+                <span class="iconify text-2xl" data-icon="mdi:close"></span>
+            </button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-6">
+            <div id="notificationsList" class="space-y-4">
+                <!-- Notificações serão inseridas aqui -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-8 right-8 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-32 transition-transform duration-300 z-50 flex items-center gap-3">
+        <span class="iconify text-xl" data-icon="mdi:check-circle"></span>
+        <span id="toastMessage"></span>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
+
