@@ -52,6 +52,9 @@
     </script>
 
     <link rel="stylesheet" href="style.css">
+
+    <!-- Dados Iniciais -->
+    <script src="init-data.js"></script>
 </head>
 <body class="bg-gray-50 font-sans">
 
@@ -132,6 +135,10 @@
                         <span class="iconify" data-icon="mdi:download"></span>
                         Exportar
                     </button>
+                    <button onclick="exportarRelatorioPDF && exportarRelatorioPDF()" class="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors flex items-center gap-2" title="Exportar relatório executivo">
+                        <span class="iconify" data-icon="mdi:file-pdf-box"></span>
+                        Relatório
+                    </button>
                     <button onclick="toggleNotifications()" class="relative p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
                         <span class="iconify text-xl" data-icon="mdi:bell"></span>
                         <span id="notificationBadge" class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
@@ -152,12 +159,17 @@
             <section id="section-dashboard" class="section-content">
                 <div class="mb-6">
                     <h2 class="text-3xl font-bold text-gray-800">Dashboard</h2>
-                    <p class="text-gray-600 mt-1">Visão geral do projeto</p>
+                    <p class="text-gray-600 mt-1">Visão geral em tempo real do projeto</p>
                 </div>
 
-                <!-- Métricas -->
+                <!-- Saúde do Projeto -->
+                <div id="projectHealth" class="mb-8">
+                    <!-- Carregado via JavaScript -->
+                </div>
+
+                <!-- Métricas Principais -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm text-gray-600">Total de Requisitos</p>
@@ -169,7 +181,7 @@
                         </div>
                     </div>
 
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm text-gray-600">Alta Prioridade</p>
@@ -181,7 +193,7 @@
                         </div>
                     </div>
 
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm text-gray-600">Tarefas Kanban</p>
@@ -193,7 +205,7 @@
                         </div>
                     </div>
 
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm text-gray-600">Cobertura de Testes</p>
@@ -207,15 +219,43 @@
                 </div>
 
                 <!-- Gráficos -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
                         <h3 class="text-lg font-semibold text-gray-800 mb-4">Requisitos por Tipo</h3>
-                        <canvas id="chartTipos"></canvas>
+                        <div style="position: relative; height: 250px; width: 100%;">
+                            <canvas id="chartTipos"></canvas>
+                        </div>
                     </div>
 
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
                         <h3 class="text-lg font-semibold text-gray-800 mb-4">Requisitos por Prioridade</h3>
-                        <canvas id="chartPrioridades"></canvas>
+                        <div style="position: relative; height: 250px; width: 100%;">
+                            <canvas id="chartPrioridades"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Progresso por Status</h3>
+                        <div style="position: relative; height: 250px; width: 100%;">
+                            <canvas id="chartStatus"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Atividade da Equipe e Marcos Próximos -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Atividade Recente</h3>
+                        <div id="teamActivityFeed" class="space-y-2">
+                            <!-- Carregado via JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Marcos Próximos</h3>
+                        <div id="upcomingMilestones" class="space-y-3">
+                            <!-- Carregado via JavaScript -->
+                        </div>
                     </div>
                 </div>
             </section>
@@ -347,11 +387,25 @@
             <section id="section-dependencias" class="section-content hidden">
                 <div class="mb-6">
                     <h2 class="text-3xl font-bold text-gray-800">Grafo de Dependências</h2>
-                    <p class="text-gray-600 mt-1">Visualize as relações entre requisitos</p>
+                    <p class="text-gray-600 mt-1">Visualize as relações entre requisitos - use mouse para navegar e scroll para zoom</p>
                 </div>
 
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                    <div id="network" style="height: 600px;"></div>
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200" style="padding: 0; overflow: hidden; position: relative;">
+                    <!-- Controles flutuantes -->
+                    <div id="networkControls" style="position: absolute; top: 15px; right: 15px; z-index: 100; display: flex; gap: 8px; background: white; padding: 10px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #e5e7eb;">
+                        <button onclick="if(window.dependenciesNetwork) window.dependenciesNetwork.fit();" class="px-3 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 flex items-center gap-1" title="Encaixar grafo">
+                            <span class="iconify" data-icon="mdi:fit-to-screen"></span>
+                            Encaixar
+                        </button>
+                        <button onclick="navigateTo('requisitos');" class="px-3 py-2 bg-gray-600 text-white rounded text-sm hover:bg-gray-700 flex items-center gap-1" title="Ir para requisitos">
+                            <span class="iconify" data-icon="mdi:list-box"></span>
+                        </button>
+                        <button onclick="navigateTo('matriz');" class="px-3 py-2 bg-gray-600 text-white rounded text-sm hover:bg-gray-700 flex items-center gap-1" title="Ir para matriz">
+                            <span class="iconify" data-icon="mdi:table"></span>
+                        </button>
+                    </div>
+
+                    <div id="network" style="height: 80vh; width: 100%; position: relative; display: flex;"></div>
                 </div>
             </section>
 
@@ -565,6 +619,13 @@
                         Novo Template
                     </button>
                 </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div id="gridTemplates">
+                        <!-- Templates serão inseridos aqui -->
+                    </div>
+                </div>
+            </section>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div id="gridTemplates">

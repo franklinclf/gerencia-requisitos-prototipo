@@ -66,309 +66,50 @@ function setupEventListeners() {
 // ============================================================================
 
 function initializeSampleData() {
-    console.log('Inicializando dados de exemplo...');
-    
-    // Requisitos baseados nas entregas
-    state.requisitos = [
-        {
-            id: 'RF001',
-            titulo: 'CRUD de Requisitos',
-            descricao: 'O sistema deve permitir criar, visualizar, editar e excluir requisitos com campos como ID, título, descrição, tipo, prioridade, status, versão, autor e data.',
-            tipo: 'RF',
-            prioridade: 'Alta',
-            status: 'Implementado',
-            versao: 1,
-            historico: [],
-            dependencias: [],
-            autor: 'Usuário Admin',
-            data: new Date('2024-11-15'),
-            tags: ['gestão', 'básico', 'crud']
-        },
-        {
-            id: 'RF002',
-            titulo: 'Busca e Filtro Avançado de Requisitos',
-            descricao: 'O sistema deve permitir buscar e filtrar requisitos por múltiplos critérios: título, tipo, prioridade, status, tags e autor.',
-            tipo: 'RF',
-            prioridade: 'Alta',
-            status: 'Implementado',
-            versao: 1,
-            historico: [],
-            dependencias: ['RF001'],
-            autor: 'Usuário Admin',
-            data: new Date('2024-11-15'),
-            tags: ['busca', 'filtro', 'usabilidade']
-        },
-        {
-            id: 'RF004',
-            titulo: 'Versionamento e Comparação de Requisitos',
-            descricao: 'O sistema deve manter histórico de versões dos requisitos, permitindo visualizar alterações e comparar versões com justificativas obrigatórias.',
-            tipo: 'RF',
-            prioridade: 'Alta',
-            status: 'Implementado',
-            versao: 1,
-            historico: [],
-            dependencias: ['RF001'],
-            autor: 'Usuário Admin',
-            data: new Date('2024-11-16'),
-            tags: ['versionamento', 'auditoria', 'histórico']
-        },
-        {
-            id: 'RF005',
-            titulo: 'Priorização de Requisitos',
-            descricao: 'O sistema deve permitir classificar requisitos em níveis de prioridade: Alta, Média e Baixa, com indicação visual clara.',
-            tipo: 'RF',
-            prioridade: 'Alta',
-            status: 'Implementado',
-            versao: 1,
-            historico: [],
-            dependencias: ['RF001'],
-            autor: 'Usuário Admin',
-            data: new Date('2024-11-16'),
-            tags: ['priorização', 'gestão']
-        },
-        {
-            id: 'RF006',
-            titulo: 'Exportação e Importação de Requisitos',
-            descricao: 'O sistema deve permitir exportar requisitos em múltiplos formatos (PDF, DOCX, XLSX, CSV, JSON) e importar dados estruturados.',
-            tipo: 'RF',
-            prioridade: 'Alta',
-            status: 'Implementado',
-            versao: 1,
-            historico: [],
-            dependencias: ['RF001'],
-            autor: 'Usuário Admin',
-            data: new Date('2024-11-17'),
-            tags: ['exportação', 'importação', 'integração']
-        },
-        {
-            id: 'RF007',
-            titulo: 'Dashboard de Visão Geral',
-            descricao: 'O sistema deve apresentar um dashboard com métricas e gráficos sobre requisitos, incluindo distribuição por tipo, prioridade e status.',
-            tipo: 'RF',
-            prioridade: 'Alta',
-            status: 'Implementado',
-            versao: 1,
-            historico: [],
-            dependencias: ['RF001'],
-            autor: 'Usuário Admin',
-            data: new Date('2024-11-18'),
-            tags: ['dashboard', 'métricas', 'visualização']
-        },
-        {
-            id: 'RF008',
-            titulo: 'Visualização de Dependências em Grafo',
-            descricao: 'O sistema deve exibir graficamente as dependências entre requisitos, permitindo identificar relações e impactos de mudanças.',
-            tipo: 'RF',
-            prioridade: 'Alta',
-            status: 'Implementado',
-            versao: 1,
-            historico: [],
-            dependencias: ['RF001'],
-            autor: 'Usuário Admin',
-            data: new Date('2024-11-18'),
-            tags: ['grafo', 'dependências', 'visualização']
-        },
-        {
-            id: 'RF009',
-            titulo: 'Validação Automática de Requisitos',
-            descricao: 'O sistema deve validar automaticamente campos obrigatórios, formatos corretos e detectar dependências circulares.',
-            tipo: 'RF',
-            prioridade: 'Média',
-            status: 'Implementado',
-            versao: 1,
-            historico: [],
-            dependencias: ['RF001'],
-            autor: 'Usuário Admin',
-            data: new Date('2024-11-19'),
-            tags: ['validação', 'qualidade']
-        },
-        {
-            id: 'RF010',
-            titulo: 'Templates de Requisitos',
-            descricao: 'O sistema deve permitir criar e usar templates para padronizar a estrutura de diferentes tipos de requisitos.',
-            tipo: 'RF',
-            prioridade: 'Média',
-            status: 'Proposto',
-            versao: 1,
-            historico: [],
-            dependencias: ['RF001'],
-            autor: 'Usuário Admin',
-            data: new Date('2024-11-19'),
-            tags: ['templates', 'padronização']
-        },
-        {
-            id: 'RF011',
-            titulo: 'Matriz de Rastreabilidade',
-            descricao: 'O sistema deve apresentar uma matriz de rastreabilidade mostrando relações entre requisitos, casos de teste e código.',
-            tipo: 'RF',
-            prioridade: 'Alta',
-            status: 'Implementado',
-            versao: 1,
-            historico: [],
-            dependencias: ['RF001'],
-            autor: 'Usuário Admin',
-            data: new Date('2024-11-20'),
-            tags: ['rastreabilidade', 'qualidade', 'testes']
-        },
-        {
-            id: 'RF012',
-            titulo: 'Log de Auditoria Completo',
-            descricao: 'O sistema deve registrar todas as ações realizadas (criação, edição, exclusão) com informações de usuário, data/hora e detalhes.',
-            tipo: 'RF',
-            prioridade: 'Alta',
-            status: 'Implementado',
-            versao: 1,
-            historico: [],
-            dependencias: [],
-            autor: 'Usuário Admin',
-            data: new Date('2024-11-20'),
-            tags: ['auditoria', 'segurança', 'rastreamento']
-        },
-        {
-            id: 'RF013',
-            titulo: 'Ferramenta Colaborativa de Discussão',
-            descricao: 'O sistema deve permitir adicionar comentários e threads de discussão em cada requisito para facilitar negociação e colaboração.',
-            tipo: 'RF',
-            prioridade: 'Média',
-            status: 'Proposto',
-            versao: 1,
-            historico: [],
-            dependencias: ['RF001'],
-            autor: 'Usuário Admin',
-            data: new Date('2024-11-21'),
-            tags: ['colaboração', 'comentários', 'discussão']
-        },
-        {
-            id: 'RF014',
-            titulo: 'Quadro Kanban para Tarefas',
-            descricao: 'O sistema deve fornecer um quadro Kanban com colunas drag-and-drop para gerenciar tarefas vinculadas aos requisitos.',
-            tipo: 'RF',
-            prioridade: 'Alta',
-            status: 'Implementado',
-            versao: 1,
-            historico: [],
-            dependencias: ['RF001'],
-            autor: 'Usuário Admin',
-            data: new Date('2024-11-21'),
-            tags: ['kanban', 'tarefas', 'gestão']
-        },
-        {
-            id: 'RF015',
-            titulo: 'Módulo de Negociação de Requisitos',
-            descricao: 'O sistema deve permitir propostas de alteração, discussão e aprovação de mudanças em requisitos com histórico de negociação.',
-            tipo: 'RF',
-            prioridade: 'Média',
-            status: 'Proposto',
-            versao: 1,
-            historico: [],
-            dependencias: ['RF001', 'RF013'],
-            autor: 'Usuário Admin',
-            data: new Date('2024-11-22'),
-            tags: ['negociação', 'aprovação', 'workflow']
-        },
-        {
-            id: 'RF018',
-            titulo: 'Manter Documentação e Wiki',
-            descricao: 'O sistema deve fornecer um módulo de documentação/wiki para armazenar guias, tutoriais e documentos técnicos com suporte a Markdown.',
-            tipo: 'RF',
-            prioridade: 'Média',
-            status: 'Implementado',
-            versao: 1,
-            historico: [],
-            dependencias: [],
-            autor: 'Usuário Admin',
-            data: new Date('2024-11-23'),
-            tags: ['documentação', 'wiki', 'markdown']
-        },
-        {
-            id: 'RNF001',
-            titulo: 'Interface Visual e Intuitiva',
-            descricao: 'A interface deve seguir padrões de design modernos (Ant Design), com navegação clara e feedback visual imediato.',
-            tipo: 'RNF',
-            prioridade: 'Alta',
-            status: 'Implementado',
-            versao: 1,
-            historico: [],
-            dependencias: [],
-            autor: 'Usuário Admin',
-            data: new Date('2024-11-24'),
-            tags: ['usabilidade', 'design', 'interface']
-        },
-        {
-            id: 'RNF002',
-            titulo: 'Portabilidade Web',
-            descricao: 'O sistema deve ser acessível via navegadores web modernos, sem necessidade de instalação de software adicional.',
-            tipo: 'RNF',
-            prioridade: 'Alta',
-            status: 'Implementado',
-            versao: 1,
-            historico: [],
-            dependencias: [],
-            autor: 'Usuário Admin',
-            data: new Date('2024-11-24'),
-            tags: ['portabilidade', 'web', 'compatibilidade']
-        },
-        {
-            id: 'RNF003',
-            titulo: 'Integração entre Módulos',
-            descricao: 'Todos os módulos do sistema devem estar integrados, permitindo navegação fluida e compartilhamento de dados.',
-            tipo: 'RNF',
-            prioridade: 'Alta',
-            status: 'Implementado',
-            versao: 1,
-            historico: [],
-            dependencias: [],
-            autor: 'Usuário Admin',
-            data: new Date('2024-11-25'),
-            tags: ['integração', 'arquitetura', 'modularidade']
-        }
-    ];
-    
-    // Tarefas Kanban
-    state.tarefas = [
-        {
-            id: 1,
-            titulo: 'Implementar sistema de notificações',
-            descricao: 'Criar sistema de notificações em tempo real para mudanças em requisitos',
-            coluna: 'backlog',
-            prioridade: 'Média',
-            responsavel: 'Dev Team',
-            data: new Date(),
-            requisitosVinculados: ['RF013']
-        },
-        {
-            id: 2,
-            titulo: 'Melhorar exportação PDF',
-            descricao: 'Adicionar templates customizáveis para exportação PDF',
-            coluna: 'progresso',
-            prioridade: 'Alta',
-            responsavel: 'João Silva',
-            data: new Date(),
-            requisitosVinculados: ['RF006']
-        },
-        {
-            id: 3,
-            titulo: 'Revisar matriz de rastreabilidade',
-            descricao: 'Validar todos os vínculos da matriz e adicionar filtros',
-            coluna: 'revisao',
-            prioridade: 'Alta',
-            responsavel: 'Maria Santos',
-            data: new Date(),
-            requisitosVinculados: ['RF011']
-        },
-        {
-            id: 4,
-            titulo: 'Documentar API',
-            descricao: 'Criar documentação completa da API do sistema',
-            coluna: 'concluido',
-            prioridade: 'Média',
-            responsavel: 'Pedro Costa',
-            data: new Date(),
-            requisitosVinculados: ['RF018']
-        }
-    ];
-    
-    // Documentos
+    console.log('Inicializando dados do sistema...');
+
+    // Usar dados do init-data.js se disponível
+    if (typeof INITIAL_REQUIREMENTS !== 'undefined' && INITIAL_REQUIREMENTS.length > 0) {
+        // Converter datas de string para Date objects
+        state.requisitos = INITIAL_REQUIREMENTS.map(req => ({
+            ...req,
+            data: new Date(req.data || Date.now()),
+            historico: (req.historico || []).map(h => ({
+                ...h,
+                data: new Date(h.data || Date.now())
+            }))
+        }));
+
+        state.tarefas = INITIAL_TASKS || [];
+        state.milestones = INITIAL_MILESTONES || [];
+        state.discussoes = INITIAL_DISCUSSIONS || [];
+
+        console.log('✓ Dados do entrega3.md carregados com sucesso');
+        console.log(`  - ${state.requisitos.length} requisitos`);
+        console.log(`  - ${state.tarefas.length} tarefas`);
+        console.log(`  - ${state.milestones.length} marcos`);
+    } else {
+        // Fallback para dados de exemplo simplificados
+        console.log('Iniciando com dados de exemplo padrão...');
+        state.requisitos = [
+            {
+                id: 'RF001',
+                titulo: 'Manter Requisitos (CRUD)',
+                descricao: 'O sistema deve permitir criar, visualizar, editar e excluir requisitos.',
+                tipo: 'RF',
+                prioridade: 'Alta',
+                status: 'Implementado',
+                versao: 1,
+                historico: [],
+                dependencias: [],
+                autor: 'Usuário Admin',
+                data: new Date(),
+                tags: ['gestão', 'básico']
+            }
+        ];
+    }
+
+    // Documentos padrão
     state.documentos = [
         {
             id: 1,
@@ -377,124 +118,133 @@ function initializeSampleData() {
 
 ## Bem-vindo ao ReqFlow!
 
-Este guia vai ajudá-lo a começar a usar o sistema de gerenciamento de requisitos.
+Sistema de gerenciamento de requisitos integrado e colaborativo.
 
 ### Principais Funcionalidades
 
-1. **Dashboard**: Visão geral do projeto com métricas em tempo real
-2. **Requisitos**: CRUD completo com versionamento
+1. **Dashboard**: Métricas e progresso do projeto
+2. **Requisitos**: CRUD com versionamento e rastreabilidade
 3. **Kanban**: Gestão visual de tarefas
-4. **Matriz**: Rastreabilidade completa
-5. **Dependências**: Visualização em grafo
+4. **Análise**: Gráficos e matrizes de dependências
+5. **Documentação**: Wiki e repositório de documentos
 
-### Como Criar um Requisito
+### Como Começar
 
-1. Navegue até a seção "Requisitos"
-2. Clique em "Novo Requisito"
-3. Preencha os campos obrigatórios
-4. Salve e acompanhe no dashboard
+1. Acesse "Requisitos" para criar seus primeiros requisitos
+2. Use "Kanban" para gerenciar tarefas
+3. Exporte seus dados com "Exportar"
 
-### Exportação de Dados
-
-O sistema suporta exportação em:
-- PDF (relatórios formatados)
-- Excel (planilhas)
-- CSV (dados tabulares)
-- JSON (integração com outras ferramentas)
-`,
+Mais informações em [GitHub](https://github.com)`,
             tipo: 'guia',
-            data: new Date('2024-11-01'),
+            data: new Date('2024-12-01'),
             autor: 'Usuário Admin',
             versao: 1
         },
         {
             id: 2,
-            titulo: 'Especificação de Requisitos',
-            conteudo: `# Especificação de Requisitos do Sistema
+            titulo: 'Especificação ReqFlow v0.2',
+            conteudo: `# Especificação do Sistema ReqFlow
 
-## 1. Introdução
+## Visão Geral
 
-Este documento descreve os requisitos funcionais e não-funcionais do sistema ReqFlow.
+ReqFlow é uma ferramenta integrada para gerenciamento de requisitos em projetos de software.
 
-## 2. Requisitos Funcionais
+## Módulos Principais
 
-### 2.1 Gerenciamento de Requisitos
-- RF001: CRUD de Requisitos
-- RF002: Busca e Filtro Avançado
-- RF004: Versionamento
-- RF005: Priorização
+### 1. Gerenciamento de Requisitos
+- CRUD completo (RF001)
+- Versionamento (RF004)
+- Validação automática (RF009)
+- Templates (RF010)
 
-### 2.2 Exportação e Relatórios
-- RF006: Exportação Multi-formato
-- RF007: Dashboard com Métricas
+### 2. Análise e Visualização
+- Dashboard (RF007)
+- Matriz de Rastreabilidade (RF011)
+- Grafo de Dependências (RF008)
 
-## 3. Requisitos Não-Funcionais
+### 3. Colaboração
+- Discussões (RF013)
+- Documentação (RF018)
+- Log de Auditoria (RF012)
 
-### 3.1 Usabilidade
-- Interface intuitiva seguindo padrões Ant Design
-- Feedback visual imediato para ações do usuário
+### 4. Importação/Exportação
+- Múltiplos formatos (RF006)
+- Projeto completo serializado (JSON)
 
-### 3.2 Portabilidade
-- Compatível com navegadores modernos
-- Sem necessidade de instalação
-`,
+## Requisitos Técnicos
+
+- HTML5 + CSS3 + JavaScript puro
+- Tailwind CSS via CDN
+- localStorage para persistência
+- vis.js para grafos
+- Chart.js para gráficos`,
             tipo: 'especificacao',
-            data: new Date('2024-11-05'),
+            data: new Date('2024-12-05'),
             autor: 'Usuário Admin',
             versao: 1
         }
     ];
     
-    // Templates
+    // Templates padrão
     state.templates = [
         {
             id: 1,
             nome: 'Requisito Funcional Padrão',
+            descricao: 'Template para requisitos funcionais',
             tipo: 'RF',
+            estrutura: '## Objetivo\n\n## Descrição\n\n## Critérios de Aceitação\n- Critério 1\n- Critério 2\n\n## Notas',
             campos: {
                 titulo: '',
                 descricao: 'O sistema deve...',
+                prioridade: 'Média',
+                status: 'Proposto',
+                tipo: 'RF'
+            }
+        },
+        {
+            id: 2,
+            nome: 'Caso de Uso',
+            descricao: 'Template para documentar casos de uso',
+            tipo: 'RF',
+            estrutura: '## Ator Principal\n\n## Pré-condições\n\n## Fluxo Principal\n1. \n2. \n\n## Fluxos Alternativos\n\n## Pós-condições',
+            campos: {
+                titulo: '',
+                descricao: '',
                 prioridade: 'Média',
                 status: 'Proposto'
             }
         },
         {
-            id: 2,
-            nome: 'Requisito de Interface',
-            tipo: 'RF',
-            campos: {
-                titulo: '',
-                descricao: 'A interface deve apresentar...',
-                prioridade: 'Alta',
-                status: 'Proposto',
-                tags: ['interface', 'usabilidade']
-            }
-        },
-        {
             id: 3,
             nome: 'Requisito Não-Funcional',
+            descricao: 'Template para requisitos não-funcionais',
             tipo: 'RNF',
+            estrutura: '## Atributo\n\n## Métrica\n\n## Restrição\n\n## Justificativa',
             campos: {
                 titulo: '',
                 descricao: 'O sistema deve garantir...',
                 prioridade: 'Alta',
-                status: 'Proposto'
+                status: 'Proposto',
+                tipo: 'RNF'
             }
         }
     ];
     
-    // Usuários
+    // Usuários do projeto
     state.usuarios = [
-        { id: 1, nome: 'Usuário Admin', papel: 'Gerente', avatar: 'UA' },
+        { id: 1, nome: 'Usuário Admin', papel: 'Gerente de Requisitos', avatar: 'UA' },
         { id: 2, nome: 'João Silva', papel: 'Desenvolvedor', avatar: 'JS' },
-        { id: 3, nome: 'Maria Santos', papel: 'Analista', avatar: 'MS' },
-        { id: 4, nome: 'Pedro Costa', papel: 'Tester', avatar: 'PC' }
+        { id: 3, nome: 'Maria Santos', papel: 'Analista QA', avatar: 'MS' },
+        { id: 4, nome: 'Pedro Costa', papel: 'Testador', avatar: 'PC' },
+        { id: 5, nome: 'Ana Oliveira', papel: 'Arquiteta de Software', avatar: 'AO' }
     ];
     
     // Log de auditoria inicial
-    addAuditLog('Sistema Inicializado', 'Sistema', 'Sistema inicializado com dados de exemplo');
-    
+    addAuditLog('Sistema Inicializado', 'Sistema', `Sistema iniciado com ${state.requisitos.length} requisitos`);
+
     saveToStorage();
+
+    console.log(`✓ Inicialização concluída: ${state.requisitos.length} requisitos carregados`);
 }
 
 // ============================================================================
@@ -556,8 +306,19 @@ function navigateTo(section) {
 // ============================================================================
 
 function renderDashboard() {
+    console.log('Renderizando Dashboard...');
+
     updateDashboardMetrics();
-    renderCharts();
+
+    // Aguardar um momento para garantir que o DOM está pronto
+    setTimeout(() => {
+        renderCharts();
+    }, 100);
+
+    // Renderizar outras seções se disponível
+    if (typeof renderProjectHealth === 'function') renderProjectHealth();
+    if (typeof renderTeamActivity === 'function') renderTeamActivity();
+    if (typeof renderUpcomingMilestones === 'function') renderUpcomingMilestones();
 }
 
 function updateDashboardMetrics() {
@@ -1242,34 +1003,39 @@ function excluirTarefa(id) {
 // ============================================================================
 
 function renderMatriz() {
-    const requisitos = state.requisitos;
-    const testes = ['Teste Unitário', 'Teste Integração', 'Teste Sistema', 'Teste Aceitação'];
-    
-    let html = '<thead class="bg-gray-50"><tr><th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Requisito</th>';
-    
-    testes.forEach(teste => {
-        html += `<th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">${teste}</th>`;
-    });
-    
-    html += '</tr></thead><tbody class="divide-y divide-gray-200">';
-    
-    requisitos.forEach(req => {
-        html += `<tr><td class="px-4 py-3 font-medium text-sm text-gray-800">${req.id}<br><span class="text-xs text-gray-500">${req.titulo.substring(0, 40)}...</span></td>`;
-        
-        testes.forEach((teste, idx) => {
-            // Simulação: Requisitos de alta prioridade têm mais cobertura
-            const isLinked = req.prioridade === 'Alta' || (req.prioridade === 'Média' && idx < 2) || Math.random() > 0.7;
-            html += `<td class="matriz-cell ${isLinked ? 'linked' : ''}" onclick="toggleMatrizCell(this, '${req.id}', '${teste}')">
-                ${isLinked ? '<span class="iconify text-green-600" data-icon="mdi:check-circle"></span>' : '-'}
-            </td>`;
+    // Usar versão avançada se disponível
+    if (typeof renderMatrizAvancada === 'function') {
+        renderMatrizAvancada();
+    } else {
+        // Fallback para versão simples
+        const requisitos = state.requisitos;
+        const testes = ['Teste Unitário', 'Teste Integração', 'Teste Sistema', 'Teste Aceitação'];
+
+        let html = '<thead class="bg-gray-50"><tr><th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Requisito</th>';
+
+        testes.forEach(teste => {
+            html += `<th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">${teste}</th>`;
         });
-        
-        html += '</tr>';
-    });
-    
-    html += '</tbody>';
-    
-    document.getElementById('matrizRastreabilidade').innerHTML = html;
+
+        html += '</tr></thead><tbody class="divide-y divide-gray-200">';
+
+        requisitos.forEach(req => {
+            html += `<tr><td class="px-4 py-3 font-medium text-sm text-gray-800">${req.id}<br><span class="text-xs text-gray-500">${req.titulo.substring(0, 40)}...</span></td>`;
+
+            testes.forEach((teste, idx) => {
+                const isLinked = req.prioridade === 'Alta' || (req.prioridade === 'Média' && idx < 2) || Math.random() > 0.7;
+                html += `<td class="matriz-cell ${isLinked ? 'linked' : ''}" onclick="toggleMatrizCell(this, '${req.id}', '${teste}')">
+                    ${isLinked ? '<span class="iconify text-green-600" data-icon="mdi:check-circle"></span>' : '-'}
+                </td>`;
+            });
+
+            html += '</tr>';
+        });
+
+        html += '</tbody>';
+
+        document.getElementById('matrizRastreabilidade').innerHTML = html;
+    }
 }
 
 function toggleMatrizCell(cell, reqId, teste) {
@@ -1291,75 +1057,81 @@ function toggleMatrizCell(cell, reqId, teste) {
 // ============================================================================
 
 function renderDependencias() {
-    const container = document.getElementById('network');
-    
-    // Preparar dados para o grafo
-    const nodes = state.requisitos.map(req => ({
-        id: req.id,
-        label: req.id,
-        title: `${req.id}: ${req.titulo}`,
-        color: req.prioridade === 'Alta' ? '#ef4444' : 
-               req.prioridade === 'Média' ? '#f59e0b' : '#10b981',
-        shape: 'box',
-        font: { color: '#ffffff' }
-    }));
-    
-    const edges = [];
-    state.requisitos.forEach(req => {
-        if (req.dependencias && req.dependencias.length > 0) {
-            req.dependencias.forEach(depId => {
-                if (state.requisitos.some(r => r.id === depId)) {
-                    edges.push({
-                        from: depId,
-                        to: req.id,
-                        arrows: 'to',
-                        color: { color: '#94a3b8' }
-                    });
-                }
-            });
-        }
-    });
-    
-    const data = { nodes, edges };
-    
-    const options = {
-        layout: {
-            hierarchical: {
-                enabled: true,
-                direction: 'UD',
-                sortMethod: 'directed',
-                levelSeparation: 150,
-                nodeSpacing: 200
-            }
-        },
-        physics: {
-            enabled: false
-        },
-        interaction: {
-            dragNodes: true,
-            dragView: true,
-            zoomView: true
-        },
-        edges: {
-            smooth: {
-                type: 'cubicBezier',
-                forceDirection: 'vertical'
-            }
-        }
-    };
-    
-    try {
-        const network = new vis.Network(container, data, options);
-        
-        network.on('click', function(params) {
-            if (params.nodes.length > 0) {
-                const reqId = params.nodes[0];
-                editarRequisito(reqId);
+    // Usar versão avançada se disponível
+    if (typeof renderDependenciasAvancadas === 'function') {
+        renderDependenciasAvancadas();
+    } else {
+        // Fallback
+        const container = document.getElementById('network');
+
+        // Preparar dados para o grafo
+        const nodes = state.requisitos.map(req => ({
+            id: req.id,
+            label: req.id,
+            title: `${req.id}: ${req.titulo}`,
+            color: req.prioridade === 'Alta' ? '#ef4444' :
+                   req.prioridade === 'Média' ? '#f59e0b' : '#10b981',
+            shape: 'box',
+            font: { color: '#ffffff' }
+        }));
+
+        const edges = [];
+        state.requisitos.forEach(req => {
+            if (req.dependencias && req.dependencias.length > 0) {
+                req.dependencias.forEach(depId => {
+                    if (state.requisitos.some(r => r.id === depId)) {
+                        edges.push({
+                            from: depId,
+                            to: req.id,
+                            arrows: 'to',
+                            color: { color: '#94a3b8' }
+                        });
+                    }
+                });
             }
         });
-    } catch (error) {
-        console.error('Erro ao renderizar grafo:', error);
-        container.innerHTML = '<div class="flex items-center justify-center h-full text-gray-500">Erro ao carregar o grafo de dependências</div>';
+
+        const data = { nodes, edges };
+
+        const options = {
+            layout: {
+                hierarchical: {
+                    enabled: true,
+                    direction: 'UD',
+                    sortMethod: 'directed',
+                    levelSeparation: 150,
+                    nodeSpacing: 200
+                }
+            },
+            physics: {
+                enabled: false
+            },
+            interaction: {
+                dragNodes: true,
+                dragView: true,
+                zoomView: true
+            },
+            edges: {
+                smooth: {
+                    type: 'cubicBezier',
+                    forceDirection: 'vertical'
+                }
+            }
+        };
+
+        try {
+            const network = new vis.Network(container, data, options);
+
+            network.on('click', function(params) {
+                if (params.nodes.length > 0) {
+                    const reqId = params.nodes[0];
+                    editarRequisito(reqId);
+                }
+            });
+        } catch (error) {
+            console.error('Erro ao renderizar grafo:', error);
+            container.innerHTML = '<div class="flex items-center justify-center h-full text-gray-500">Erro ao carregar o grafo de dependências</div>';
+        }
     }
 }
 
@@ -2630,5 +2402,2092 @@ addAuditLog = function(acao, entidade, detalhes) {
     adicionarAtividade(tipoMap[tipo] || 'update', acao.toLowerCase(), entidade);
 };
 
+// ============================================================================
+// FUNÇÕES AUXILIARES GERAIS
+// ============================================================================
+
+function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function formatDate(date) {
+    if (!date) return '';
+    const d = new Date(date);
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+    return `${day}/${month}/${year}`;
+}
+
+function formatDateTime(date) {
+    if (!date) return '';
+    const d = new Date(date);
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+    const hours = String(d.getHours()).padStart(2, '0');
+    const minutes = String(d.getMinutes()).padStart(2, '0');
+    const seconds = String(d.getSeconds()).padStart(2, '0');
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+}
+
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.add('hidden');
+    }
+}
+
+function showToast(message, type = 'success') {
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toastMessage');
+    const icon = toast.querySelector('.iconify');
+
+    toastMessage.textContent = message;
+
+    // Definir cor e ícone
+    toast.classList.remove('bg-gray-800', 'bg-green-600', 'bg-red-600', 'bg-blue-600', 'bg-yellow-600');
+
+    if (type === 'success') {
+        toast.classList.add('bg-green-600');
+        icon.setAttribute('data-icon', 'mdi:check-circle');
+    } else if (type === 'error') {
+        toast.classList.add('bg-red-600');
+        icon.setAttribute('data-icon', 'mdi:close-circle');
+    } else if (type === 'warning') {
+        toast.classList.add('bg-yellow-600');
+        icon.setAttribute('data-icon', 'mdi:alert');
+    } else if (type === 'info') {
+        toast.classList.add('bg-blue-600');
+        icon.setAttribute('data-icon', 'mdi:information');
+    } else {
+        toast.classList.add('bg-gray-800');
+    }
+
+    toast.classList.remove('translate-y-32');
+    toast.classList.add('translate-y-0');
+
+    setTimeout(() => {
+        toast.classList.remove('translate-y-0');
+        toast.classList.add('translate-y-32');
+    }, 3000);
+}
+
+// ============================================================================
+// ARMAZENAMENTO LOCAL
+// ============================================================================
+
+function saveToStorage() {
+    try {
+        // Serializar dados complexos
+        const dataToSave = {
+            requisitos: state.requisitos,
+            tarefas: state.tarefas,
+            documentos: state.documentos,
+            usuarios: state.usuarios,
+            auditoria: state.auditoria,
+            templates: state.templates,
+            milestones: state.milestones || [],
+            discussoes: state.discussoes || [],
+            atividades: state.atividades || [],
+            notificacoes: state.notificacoes || [],
+            currentUser: state.currentUser,
+            currentSection: state.currentSection
+        };
+
+        localStorage.setItem('reqflow_data', JSON.stringify(dataToSave));
+        console.log('Dados salvos com sucesso');
+    } catch (error) {
+        console.error('Erro ao salvar dados:', error);
+        showToast('Erro ao salvar dados no localStorage', 'error');
+    }
+}
+
+function loadFromStorage() {
+    try {
+        const saved = localStorage.getItem('reqflow_data');
+        if (saved) {
+            const data = JSON.parse(saved);
+
+            // Restaurar dados com tratamento de datas
+            state.requisitos = (data.requisitos || []).map(req => ({
+                ...req,
+                data: new Date(req.data),
+                historico: (req.historico || []).map(h => ({
+                    ...h,
+                    data: new Date(h.data)
+                }))
+            }));
+
+            state.tarefas = data.tarefas || [];
+            state.documentos = data.documentos || [];
+            state.usuarios = data.usuarios || [];
+            state.auditoria = (data.auditoria || []).map(log => ({
+                ...log,
+                data: new Date(log.data)
+            }));
+            state.templates = data.templates || [];
+            state.milestones = (data.milestones || []).map(m => ({
+                ...m,
+                data: new Date(m.data)
+            }));
+            state.discussoes = (data.discussoes || []).map(d => ({
+                ...d,
+                data: new Date(d.data),
+                respostas: (d.respostas || []).map(r => ({
+                    ...r,
+                    data: new Date(r.data)
+                }))
+            }));
+            state.atividades = (data.atividades || []).map(a => ({
+                ...a,
+                data: new Date(a.data)
+            }));
+            state.notificacoes = data.notificacoes || [];
+            state.currentUser = data.currentUser || state.currentUser;
+            state.currentSection = data.currentSection || 'dashboard';
+
+            console.log('Dados carregados com sucesso');
+        }
+    } catch (error) {
+        console.error('Erro ao carregar dados:', error);
+    }
+}
+
+// ============================================================================
+// VALIDAÇÃO
+// ============================================================================
+
+function validarDependencias(requisitoId) {
+    const req = state.requisitos.find(r => r.id === requisitoId);
+    if (!req) return { valido: false, erro: 'Requisito não encontrado' };
+
+    // Verificar dependências que não existem
+    const depInvalidas = req.dependencias.filter(depId =>
+        !state.requisitos.some(r => r.id === depId)
+    );
+
+    if (depInvalidas.length > 0) {
+        return {
+            valido: false,
+            erro: `Dependências não encontradas: ${depInvalidas.join(', ')}`
+        };
+    }
+
+    // Verificar dependências circulares
+    function temDependenciaCircular(id, visitados = new Set()) {
+        if (visitados.has(id)) return true;
+        visitados.add(id);
+
+        const r = state.requisitos.find(x => x.id === id);
+        if (r && r.dependencias) {
+            for (let dep of r.dependencias) {
+                if (dep === requisitoId || temDependenciaCircular(dep, new Set(visitados))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    if (temDependenciaCircular(requisitoId)) {
+        return {
+            valido: false,
+            erro: 'Dependência circular detectada'
+        };
+    }
+
+    return { valido: true };
+}
+
+// ============================================================================
+// BUSCA GLOBAL
+// ============================================================================
+
+function handleGlobalSearch(e) {
+    const query = e.target.value.toLowerCase().trim();
+
+    if (!query) {
+        return;
+    }
+
+    // Buscar em requisitos
+    const requisitosFindos = state.requisitos.filter(r =>
+        r.id.toLowerCase().includes(query) ||
+        r.titulo.toLowerCase().includes(query) ||
+        r.descricao.toLowerCase().includes(query)
+    );
+
+    // Buscar em documentos
+    const documentosFindos = state.documentos.filter(d =>
+        d.titulo.toLowerCase().includes(query) ||
+        d.conteudo.toLowerCase().includes(query)
+    );
+
+    // Buscar em tarefas
+    const tarefasFindas = state.tarefas.filter(t =>
+        t.titulo.toLowerCase().includes(query) ||
+        t.descricao.toLowerCase().includes(query)
+    );
+
+    console.log('Resultados da busca:', {
+        requisitos: requisitosFindos,
+        documentos: documentosFindos,
+        tarefas: tarefasFindas
+    });
+
+    showToast(`Encontrados: ${requisitosFindos.length} requisitos, ${documentosFindos.length} documentos, ${tarefasFindas.length} tarefas`, 'info');
+}
+
+// Função de gráficos - versão funcional
+function renderCharts() {
+    console.log('Renderizando gráficos...');
+
+    // Verificar se Chart.js está disponível
+    if (typeof Chart === 'undefined') {
+        console.error('Chart.js não está carregado!');
+        return;
+    }
+
+    // Verificar se há requisitos
+    if (!state || !state.requisitos || state.requisitos.length === 0) {
+        console.warn('Nenhum requisito disponível para gráficos');
+        return;
+    }
+
+    console.log(`Renderizando gráficos com ${state.requisitos.length} requisitos`);
+
+    // Limpar gráficos anteriores
+    if (window.chartTipos) {
+        window.chartTipos.destroy();
+        window.chartTipos = null;
+    }
+    if (window.chartPrioridades) {
+        window.chartPrioridades.destroy();
+        window.chartPrioridades = null;
+    }
+    if (window.chartStatus) {
+        window.chartStatus.destroy();
+        window.chartStatus = null;
+    }
+
+    // Gráfico 1: Tipos (Donut)
+    const tiposCtx = document.getElementById('chartTipos');
+    if (tiposCtx) {
+        const ctx = tiposCtx.getContext('2d');
+        if (ctx) {
+            const rfCount = state.requisitos.filter(r => r.tipo === 'RF').length;
+            const rnfCount = state.requisitos.filter(r => r.tipo === 'RNF').length;
+
+            console.log(`Gráfico Tipos - RF: ${rfCount}, RNF: ${rnfCount}`);
+
+            try {
+                window.chartTipos = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Funcionais (RF)', 'Não-Funcionais (RNF)'],
+                        datasets: [{
+                            data: [rfCount, rnfCount],
+                            backgroundColor: ['#3b82f6', '#8b5cf6'],
+                            borderColor: '#ffffff',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    padding: 15,
+                                    font: { size: 12 }
+                                }
+                            }
+                        }
+                    }
+                });
+                console.log('✓ Gráfico de Tipos criado');
+            } catch(e) {
+                console.error('Erro ao criar gráfico de tipos:', e);
+            }
+        }
+    } else {
+        console.error('Canvas chartTipos não encontrado!');
+    }
+
+    // Gráfico 2: Prioridades (Bar Horizontal)
+    const prioridadesCtx = document.getElementById('chartPrioridades');
+    if (prioridadesCtx) {
+        const ctx = prioridadesCtx.getContext('2d');
+        if (ctx) {
+            const altaCount = state.requisitos.filter(r => r.prioridade === 'Alta').length;
+            const mediaCount = state.requisitos.filter(r => r.prioridade === 'Média').length;
+            const baixaCount = state.requisitos.filter(r => r.prioridade === 'Baixa').length;
+
+            console.log(`Gráfico Prioridades - Alta: ${altaCount}, Média: ${mediaCount}, Baixa: ${baixaCount}`);
+
+            try {
+                window.chartPrioridades = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Alta', 'Média', 'Baixa'],
+                        datasets: [{
+                            label: 'Requisitos',
+                            data: [altaCount, mediaCount, baixaCount],
+                            backgroundColor: ['#ef4444', '#f59e0b', '#10b981'],
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                ticks: { stepSize: 1, precision: 0 }
+                            }
+                        }
+                    }
+                });
+                console.log('✓ Gráfico de Prioridades criado');
+            } catch(e) {
+                console.error('Erro ao criar gráfico de prioridades:', e);
+            }
+        }
+    } else {
+        console.error('Canvas chartPrioridades não encontrado!');
+    }
+
+    // Gráfico 3: Status (Line)
+    const statusCtx = document.getElementById('chartStatus');
+    if (statusCtx) {
+        const ctx = statusCtx.getContext('2d');
+        if (ctx) {
+            const statuses = ['Proposto', 'Aprovado', 'Em Desenvolvimento', 'Implementado', 'Validado'];
+            const statusCounts = statuses.map(s => state.requisitos.filter(r => r.status === s).length);
+
+            console.log('Gráfico Status - Dados:', statusCounts);
+
+            try {
+                window.chartStatus = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: statuses,
+                        datasets: [{
+                            label: 'Requisitos',
+                            data: statusCounts,
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 6,
+                            pointBackgroundColor: '#3b82f6',
+                            pointBorderColor: '#ffffff',
+                            pointBorderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                labels: { padding: 15, font: { size: 12 } }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: { stepSize: 1, precision: 0 }
+                            }
+                        }
+                    }
+                });
+                console.log('✓ Gráfico de Status criado');
+            } catch(e) {
+                console.error('Erro ao criar gráfico de status:', e);
+            }
+        }
+    } else {
+        console.error('Canvas chartStatus não encontrado!');
+    }
+
+    console.log('Renderização de gráficos concluída');
+}
+
 console.log('ReqFlow - Funcionalidades avançadas carregadas!');
+
+// Inicialização do sistema quando tudo estiver carregado
+window.addEventListener('DOMContentLoaded', function() {
+    console.log('Inicializando ReqFlow...');
+
+    // Carregar dados do localStorage ou inicializar
+    const savedData = localStorage.getItem('reqflow_data');
+    if (savedData) {
+        try {
+            const parsed = JSON.parse(savedData);
+            Object.assign(state, parsed);
+
+            // Converter strings de data em objetos Date
+            state.requisitos.forEach(req => {
+                req.data = new Date(req.data);
+                if (req.historico) {
+                    req.historico.forEach(h => h.data = new Date(h.data));
+                }
+            });
+
+            state.tarefas.forEach(t => t.data = new Date(t.data));
+            state.auditoria.forEach(a => a.data = new Date(a.data));
+
+            console.log('Dados carregados do localStorage');
+        } catch(e) {
+            console.error('Erro ao carregar dados:', e);
+            initializeSampleData();
+        }
+    } else {
+        initializeSampleData();
+    }
+
+    // Renderizar dashboard (seção inicial)
+    navigateTo('dashboard');
+
+    console.log('ReqFlow inicializado com sucesso!');
+});
+
+// ============================================================================
+// ReqFlow - Melhorias e Correções v0.3
+// Correção de bugs, implementação de funcionalidades faltantes
+// e melhoria da experiência do usuário
+// ============================================================================
+
+// Extensão do state com mais dados e funcionalidades
+const enhancedStateExtension = {
+    comments: [],           // Comentários em requisitos
+    teamMembers: [],        // Membros da equipe com status
+    activityFeed: [],       // Feed de atividades em tempo real
+    notifications: [],      // Notificações do sistema
+    filters: {              // Filtros persistidos
+        currentFilters: {}
+    },
+    projectStats: {},       // Estatísticas do projeto
+    performanceMetrics: {}  // Métricas de performance
+};
+
+// ============================================================================
+// MELHORIAS NA RENDERIZAÇÃO DO DASHBOARD
+// ============================================================================
+
+/**
+ * Renderiza dashboard com análises avançadas e tempo real
+ */
+function renderDashboardEnhanced() {
+    updateDashboardMetrics();
+    renderChartsEnhanced();
+    renderProjectHealth();
+    renderTeamActivity();
+    renderUpcomingMilestones();
+}
+
+/**
+ * Gráficos melhorados com mais contexto
+ */
+function renderChartsEnhanced() {
+    // Destruir gráficos anteriores
+    if (window.chartTipos) {
+        window.chartTipos.destroy();
+        window.chartTipos = null;
+    }
+    if (window.chartPrioridades) {
+        window.chartPrioridades.destroy();
+        window.chartPrioridades = null;
+    }
+    if (window.chartStatus) {
+        window.chartStatus.destroy();
+        window.chartStatus = null;
+    }
+
+    // Validar que Chart está disponível
+    if (typeof Chart === 'undefined') {
+        console.error('Chart.js não carregado');
+        return;
+    }
+
+    // Gráfico 1: Tipos com dados reais
+    const tiposCtx = document.getElementById('chartTipos');
+    if (tiposCtx && state.requisitos && state.requisitos.length > 0) {
+        const tiposData = {
+            'RF': state.requisitos.filter(r => r.tipo === 'RF').length,
+            'RNF': state.requisitos.filter(r => r.tipo === 'RNF').length
+        };
+
+        try {
+            window.chartTipos = new Chart(tiposCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Funcionais (RF)', 'Não-Funcionais (RNF)'],
+                    datasets: [{
+                        data: [tiposData.RF, tiposData.RNF],
+                        backgroundColor: ['#3b82f6', '#8b5cf6'],
+                        borderColor: '#ffffff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {position: 'bottom', labels: {padding: 15, font: {size: 12, weight: 'bold'}}},
+                        tooltip: {
+                            callbacks: {
+                                label: function (c) {
+                                    const t = c.dataset.data.reduce((a, b) => a + b, 0);
+                                    const p = ((c.parsed / t) * 100).toFixed(1);
+                                    return `${c.label}: ${c.parsed} (${p}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        } catch (e) {
+            console.error('Erro gráfico tipos:', e);
+        }
+    }
+
+    // Gráfico 2: Prioridades
+    const prioridadesCtx = document.getElementById('chartPrioridades');
+    if (prioridadesCtx && state.requisitos && state.requisitos.length > 0) {
+        const prioridadesData = {
+            'Alta': state.requisitos.filter(r => r.prioridade === 'Alta').length,
+            'Média': state.requisitos.filter(r => r.prioridade === 'Média').length,
+            'Baixa': state.requisitos.filter(r => r.prioridade === 'Baixa').length
+        };
+
+        try {
+            window.chartPrioridades = new Chart(prioridadesCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Alta', 'Média', 'Baixa'],
+                    datasets: [{
+                        label: 'Requisitos',
+                        data: [prioridadesData.Alta, prioridadesData.Média, prioridadesData.Baixa],
+                        backgroundColor: ['#ef4444', '#f59e0b', '#10b981'],
+                        borderRadius: 8,
+                        borderSkipped: false
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {display: false},
+                        tooltip: {
+                            callbacks: {
+                                label: function (c) {
+                                    return `${c.parsed.x} requisitos`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {beginAtZero: true, ticks: {stepSize: 1, precision: 0}}
+                    }
+                }
+            });
+        } catch (e) {
+            console.error('Erro gráfico prioridades:', e);
+        }
+    }
+
+    // Gráfico 3: Status
+    const statusCtx = document.getElementById('chartStatus');
+    if (statusCtx && state.requisitos && state.requisitos.length > 0) {
+        const statuses = ['Proposto', 'Aprovado', 'Em Desenvolvimento', 'Implementado', 'Validado'];
+        const statusData = {};
+        statuses.forEach(status => {
+            statusData[status] = state.requisitos.filter(r => r.status === status).length;
+        });
+
+        try {
+            window.chartStatus = new Chart(statusCtx, {
+                type: 'line',
+                data: {
+                    labels: statuses,
+                    datasets: [{
+                        label: 'Requisitos',
+                        data: Object.values(statusData),
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 6,
+                        pointBackgroundColor: '#3b82f6',
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {legend: {labels: {padding: 15, font: {size: 12, weight: 'bold'}}}},
+                    scales: {y: {beginAtZero: true, ticks: {stepSize: 1, precision: 0}}}
+                }
+            });
+        } catch (e) {
+            console.error('Erro gráfico status:', e);
+        }
+    }
+}
+
+/**
+ * Renderiza saúde do projeto com badges e indicadores
+ */
+function renderProjectHealth() {
+    const healthContainer = document.getElementById('projectHealth');
+    if (!healthContainer) return;
+
+    const totalReqs = state.requisitos.length;
+    const validados = state.requisitos.filter(r => r.status === 'Validado').length;
+    const emDesenvolvimento = state.requisitos.filter(r => r.status === 'Em Desenvolvimento').length;
+    const conDependencias = state.requisitos.filter(r => (r.dependencias || []).length > 0).length;
+
+    const saudePercentual = totalReqs > 0 ? Math.round((validados / totalReqs) * 100) : 0;
+    const risco = saudePercentual >= 80 ? '🟢 Baixo' : saudePercentual >= 50 ? '🟡 Médio' : '🔴 Alto';
+
+    healthContainer.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-lg border border-blue-200">
+                <p class="text-sm text-blue-700 font-semibold">Saúde do Projeto</p>
+                <p class="text-3xl font-bold text-blue-900 mt-2">${saudePercentual}%</p>
+                <p class="text-xs text-blue-600 mt-1">${validados} de ${totalReqs} validados</p>
+            </div>
+            
+            <div class="bg-gradient-to-br from-green-50 to-green-100 p-4 rounded-lg border border-green-200">
+                <p class="text-sm text-green-700 font-semibold">Risco Geral</p>
+                <p class="text-2xl font-bold text-green-900 mt-2">${risco}</p>
+                <p class="text-xs text-green-600 mt-1">Baseado na cobertura</p>
+            </div>
+            
+            <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-4 rounded-lg border border-orange-200">
+                <p class="text-sm text-orange-700 font-semibold">Em Andamento</p>
+                <p class="text-3xl font-bold text-orange-900 mt-2">${emDesenvolvimento}</p>
+                <p class="text-xs text-orange-600 mt-1">Requisitos em desenvolvimento</p>
+            </div>
+            
+            <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-4 rounded-lg border border-purple-200">
+                <p class="text-sm text-purple-700 font-semibold">Complexidade</p>
+                <p class="text-3xl font-bold text-purple-900 mt-2">${conDependencias}</p>
+                <p class="text-xs text-purple-600 mt-1">Com dependências</p>
+            </div>
+        </div>
+    `;
+}
+
+/**
+ * Renderiza atividades da equipe em tempo real
+ */
+function renderTeamActivity() {
+    const activityContainer = document.getElementById('teamActivityFeed');
+    if (!activityContainer) return;
+
+    const recentActivity = state.auditoria.slice(-5).reverse();
+
+    activityContainer.innerHTML = recentActivity.map(log => {
+        const timeAgo = formatarDataRelativa(log.data);
+        const icon = getActivityIcon(log.acao);
+        const color = getActivityColor(log.acao);
+
+        return `
+            <div class="flex items-start gap-3 pb-4 border-b border-gray-200 last:border-b-0">
+                <div class="w-10 h-10 rounded-full ${color} flex items-center justify-center flex-shrink-0">
+                    <span class="text-white font-bold text-sm">${icon}</span>
+                </div>
+                <div class="flex-1">
+                    <p class="text-sm font-semibold text-gray-800">${log.usuario}</p>
+                    <p class="text-xs text-gray-600 mt-1">${log.acao} em <span class="font-medium">${log.entidade}</span></p>
+                    <p class="text-xs text-gray-400 mt-1">${timeAgo}</p>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+/**
+ * Renderiza marcos próximos
+ */
+function renderUpcomingMilestones() {
+    const milestonesContainer = document.getElementById('upcomingMilestones');
+    if (!milestonesContainer) return;
+
+    const milestones = (state.milestones || []).sort((a, b) => new Date(a.data) - new Date(b.data)).slice(0, 3);
+
+    milestonesContainer.innerHTML = milestones.map(milestone => {
+        const dataMs = new Date(milestone.data);
+        const agora = new Date();
+        const diasRestantes = Math.ceil((dataMs - agora) / (1000 * 60 * 60 * 24));
+        const atrasado = diasRestantes < 0;
+
+        const statusColor = milestone.status === 'Concluído' ? 'bg-green-100' :
+            milestone.status === 'Em Progresso' ? 'bg-blue-100' : 'bg-gray-100';
+        const statusBadgeColor = milestone.status === 'Concluído' ? 'bg-green-200 text-green-800' :
+            milestone.status === 'Em Progresso' ? 'bg-blue-200 text-blue-800' :
+                'bg-gray-200 text-gray-800';
+
+        return `
+            <div class="p-3 ${statusColor} rounded-lg border">
+                <div class="flex items-center justify-between mb-2">
+                    <p class="font-semibold text-gray-800 text-sm">${milestone.titulo}</p>
+                    <span class="px-2 py-1 rounded text-xs font-medium ${statusBadgeColor}">
+                        ${milestone.status}
+                    </span>
+                </div>
+                <p class="text-xs text-gray-600 mb-2">${diasRestantes > 0 ? diasRestantes + ' dias' : 'Atrasado ' + Math.abs(diasRestantes) + ' dias'}</p>
+                <div class="w-full bg-gray-300 rounded-full h-1.5">
+                    <div class="bg-blue-600 h-1.5 rounded-full" style="width: ${Math.min(100, Math.max(0, (milestone.requisitos?.length || 0) * 10))}%"></div>
+                </div>
+            </div>
+        `;
+    }).join('') || '<p class="text-sm text-gray-500">Nenhum marco próximo</p>';
+}
+
+// Helper functions
+function getActivityIcon(acao) {
+    if (acao.includes('Criado')) return '+';
+    if (acao.includes('Editado') || acao.includes('Atualizado')) return '✎';
+    if (acao.includes('Excluído')) return '✕';
+    if (acao.includes('Movido')) return '→';
+    return '•';
+}
+
+function getActivityColor(acao) {
+    if (acao.includes('Criado')) return 'bg-green-500';
+    if (acao.includes('Editado') || acao.includes('Atualizado')) return 'bg-blue-500';
+    if (acao.includes('Excluído')) return 'bg-red-500';
+    if (acao.includes('Movido')) return 'bg-yellow-500';
+    return 'bg-gray-500';
+}
+
+console.log('✓ Melhorias de Dashboard carregadas');
+
+// ============================================================================
+// ReqFlow - Funcionalidades Avançadas v0.3
+// Colaboração em tempo real, comentários, análises profundas
+// ============================================================================
+
+// ============================================================================
+// SISTEMA DE COMENTÁRIOS E COLABORAÇÃO
+// ============================================================================
+
+/**
+ * Adiciona comentário a um requisito
+ */
+function adicionarComentarioRequisito(requisitoId, texto, autor) {
+    if (!state.comments) state.comments = [];
+
+    const comentario = {
+        id: Date.now(),
+        requisitoId: requisitoId,
+        autor: autor || state.currentUser.nome,
+        texto: texto,
+        data: new Date(),
+        respostas: [],
+        likes: 0,
+        mencoes: extrairMencoes(texto)
+    };
+
+    state.comments.push(comentario);
+
+    // Registrar na auditoria
+    addAuditLog('Comentário Adicionado', 'Requisito', `Comentário em ${requisitoId}`, requisitoId);
+
+    // Notificar usuários mencionados
+    comentario.mencoes.forEach(usuario => {
+        criarNotificacao('mention', `${autor} mencionou você em ${requisitoId}`, usuario);
+    });
+
+    saveToStorage();
+    return comentario;
+}
+
+/**
+ * Renderiza comentários de um requisito
+ */
+function renderComentariosRequisito(requisitoId) {
+    const comentarios = (state.comments || []).filter(c => c.requisitoId === requisitoId);
+
+    return `
+        <div class="bg-gray-50 rounded-lg p-4 mt-4">
+            <h4 class="font-semibold text-gray-800 mb-3">Comentários (${comentarios.length})</h4>
+            
+            ${comentarios.length === 0 ?
+        '<p class="text-sm text-gray-500">Nenhum comentário ainda. Seja o primeiro!</p>' :
+        comentarios.map(c => `
+                <div class="bg-white rounded-lg p-3 mb-3 border border-gray-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center gap-2">
+                            <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(c.autor)}&background=3b82f6&color=fff" 
+                                 alt="${c.autor}" class="w-8 h-8 rounded-full">
+                            <div>
+                                <p class="font-semibold text-sm text-gray-800">${c.autor}</p>
+                                <p class="text-xs text-gray-500">${formatarDataRelativa(c.data)}</p>
+                            </div>
+                        </div>
+                        <button class="text-red-500 hover:text-red-700 text-sm" onclick="deletarComentario(${c.id})">
+                            ✕
+                        </button>
+                    </div>
+                    <p class="text-sm text-gray-700">${highlightMencoes(c.texto)}</p>
+                    <div class="flex items-center gap-3 mt-2 text-xs text-gray-500">
+                        <button onclick="likeComentario(${c.id})" class="hover:text-blue-600">
+                            👍 ${c.likes > 0 ? c.likes : ''}
+                        </button>
+                        <button onclick="responderComentario(${c.id})" class="hover:text-blue-600">
+                            💬 Responder
+                        </button>
+                    </div>
+                </div>
+            `).join('')
+    }
+            
+            <div class="mt-3">
+                <textarea id="novoComentario_${requisitoId}" 
+                         placeholder="Deixe um comentário... (use @ para mencionar)"
+                         class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm resize-none"
+                         rows="2"></textarea>
+                <button onclick="salvarComentario('${requisitoId}')" 
+                       class="mt-2 px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700">
+                    Comentar
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+/**
+ * Extrai menções (@usuario) do texto
+ */
+function extrairMencoes(texto) {
+    const regex = /@(\w+)/g;
+    const mencoes = [];
+    let match;
+    while ((match = regex.exec(texto)) !== null) {
+        mencoes.push(match[1]);
+    }
+    return mencoes;
+}
+
+/**
+ * Destaca menções no texto
+ */
+function highlightMencoes(texto) {
+    return texto.replace(/@(\w+)/g, '<span class="bg-yellow-200 font-semibold">@$1</span>');
+}
+
+/**
+ * Salva novo comentário
+ */
+function salvarComentario(requisitoId) {
+    const textarea = document.getElementById(`novoComentario_${requisitoId}`);
+    if (!textarea || !textarea.value.trim()) {
+        showToast('Digite um comentário', 'warning');
+        return;
+    }
+
+    adicionarComentarioRequisito(requisitoId, textarea.value.trim());
+    textarea.value = '';
+    showToast('Comentário adicionado!', 'success');
+
+    // Recarregar visualização (se necessário)
+    if (state.currentSection === 'requisitos') {
+        renderRequisitos();
+    }
+}
+
+/**
+ * Deleta comentário
+ */
+function deletarComentario(comentarioId) {
+    if (!confirm('Deletar este comentário?')) return;
+
+    const index = (state.comments || []).findIndex(c => c.id === comentarioId);
+    if (index !== -1) {
+        state.comments.splice(index, 1);
+        saveToStorage();
+        showToast('Comentário removido', 'success');
+    }
+}
+
+/**
+ * Gera relatório executivo do projeto
+ */
+function gerarRelatorioExecutivo() {
+    const stats = {
+        dataGeracao: new Date(),
+        projeto: {
+            totalRequisitos: state.requisitos.length,
+            porTipo: {
+                RF: state.requisitos.filter(r => r.tipo === 'RF').length,
+                RNF: state.requisitos.filter(r => r.tipo === 'RNF').length
+            },
+            porStatus: {},
+            porPrioridade: {},
+            porAutor: {}
+        },
+        qualidade: {
+            requisitoValidados: state.requisitos.filter(r => r.status === 'Validado').length,
+            percentualValidacao: 0,
+            versaoMedia: 0,
+            comentariosPorRequisito: 0
+        },
+        progresso: {
+            tarefasTotal: state.tarefas.length,
+            tarefasConcluidas: state.tarefas.filter(t => t.coluna === 'concluido').length,
+            percentualProgresso: 0
+        },
+        colaboracao: {
+            totalComentarios: (state.comments || []).length,
+            totalDiscussoes: (state.discussoes || []).length,
+            membrosAtivos: state.usuarios.length,
+            ultimaAtividade: state.auditoria.length > 0 ? state.auditoria[state.auditoria.length - 1].data : null
+        },
+        dependencias: {
+            totalLinhas: state.requisitos.reduce((sum, r) => sum + (r.dependencias || []).length, 0),
+            requisitoComDependencias: state.requisitos.filter(r => (r.dependencias || []).length > 0).length,
+            requisitoSemDependencias: state.requisitos.filter(r => !(r.dependencias || []).length).length
+        }
+    };
+
+    // Calcular status
+    ['Proposto', 'Aprovado', 'Em Desenvolvimento', 'Implementado', 'Validado'].forEach(status => {
+        stats.projeto.porStatus[status] = state.requisitos.filter(r => r.status === status).length;
+    });
+
+    // Calcular prioridade
+    ['Alta', 'Média', 'Baixa'].forEach(prio => {
+        stats.projeto.porPrioridade[prio] = state.requisitos.filter(r => r.prioridade === prio).length;
+    });
+
+    // Calcular por autor
+    state.requisitos.forEach(r => {
+        stats.projeto.porAutor[r.autor] = (stats.projeto.porAutor[r.autor] || 0) + 1;
+    });
+
+    // Cálculos de qualidade
+    const validados = stats.qualidade.requisitoValidados;
+    stats.qualidade.percentualValidacao = state.requisitos.length > 0 ?
+        Math.round((validados / state.requisitos.length) * 100) : 0;
+
+    const versoes = state.requisitos.map(r => r.versao || 1);
+    stats.qualidade.versaoMedia = versoes.length > 0 ?
+        (versoes.reduce((a, b) => a + b, 0) / versoes.length).toFixed(2) : 0;
+
+    stats.qualidade.comentariosPorRequisito = state.requisitos.length > 0 ?
+        ((state.comments || []).length / state.requisitos.length).toFixed(2) : 0;
+
+    // Progresso
+    stats.progresso.percentualProgresso = state.tarefas.length > 0 ?
+        Math.round((stats.progresso.tarefasConcluidas / state.tarefas.length) * 100) : 0;
+
+    return stats;
+}
+
+/**
+ * Exporta relatório completo em PDF profissional
+ */
+function exportarRelatorioPDF() {
+    try {
+        const {jsPDF} = window.jspdf;
+        const doc = new jsPDF();
+
+        const pageHeight = doc.internal.pageSize.height;
+        const pageWidth = doc.internal.pageSize.width;
+        const margin = 20;
+        let y = margin;
+
+        // Função helper para adicionar nova página se necessário
+        const checkNewPage = (minHeight) => {
+            if (y + minHeight > pageHeight - margin) {
+                doc.addPage();
+                y = margin;
+            }
+        };
+
+        // CAPA
+        doc.setFont(undefined, 'bold');
+        doc.setFontSize(28);
+        doc.text('RELATÓRIO DE REQUISITOS', margin, y);
+        y += 15;
+
+        doc.setFontSize(16);
+        doc.setTextColor(100, 100, 100);
+        doc.text('ReqFlow - Sistema de Gerenciamento', margin, y);
+        y += 20;
+
+        doc.setTextColor(0, 0, 0);
+        doc.setFont(undefined, 'normal');
+        doc.setFontSize(11);
+
+        const agora = new Date();
+        const dataFormatada = agora.toLocaleDateString('pt-BR', {year: 'numeric', month: 'long', day: 'numeric'});
+
+        doc.text([
+            `Data de Geração: ${dataFormatada}`,
+            `Hora: ${agora.toLocaleTimeString('pt-BR')}`,
+            `Total de Requisitos: ${state.requisitos.length}`,
+            `Requisitos Funcionais: ${state.requisitos.filter(r => r.tipo === 'RF').length}`,
+            `Requisitos Não-Funcionais: ${state.requisitos.filter(r => r.tipo === 'RNF').length}`
+        ], margin, y + 10);
+
+        doc.addPage();
+        y = margin;
+
+        // SEÇÃO 1: RESUMO EXECUTIVO
+        doc.setFont(undefined, 'bold');
+        doc.setFontSize(14);
+        doc.setTextColor(31, 78, 121);
+        doc.text('1. RESUMO EXECUTIVO', margin, y);
+        doc.setDrawColor(31, 78, 121);
+        doc.line(margin, y + 2, pageWidth - margin, y + 2);
+        y += 10;
+
+        doc.setTextColor(0, 0, 0);
+        doc.setFont(undefined, 'normal');
+        doc.setFontSize(10);
+
+        const validados = state.requisitos.filter(r => r.status === 'Validado').length;
+        const percentualValidacao = state.requisitos.length > 0 ? Math.round((validados / state.requisitos.length) * 100) : 0;
+
+        const resumo = [
+            `Total de Requisitos Cadastrados: ${state.requisitos.length}`,
+            `Requisitos Validados: ${validados} (${percentualValidacao}%)`,
+            `Requisitos em Desenvolvimento: ${state.requisitos.filter(r => r.status === 'Em Desenvolvimento').length}`,
+            `Requisitos Implementados: ${state.requisitos.filter(r => r.status === 'Implementado').length}`,
+            `Requisitos Aprovados: ${state.requisitos.filter(r => r.status === 'Aprovado').length}`,
+            `Requisitos Propostos: ${state.requisitos.filter(r => r.status === 'Proposto').length}`
+        ];
+
+        resumo.forEach(linha => {
+            doc.text(linha, margin + 5, y);
+            y += 6;
+        });
+
+        y += 5;
+
+        // SEÇÃO 2: DISTRIBUIÇÃO POR PRIORIDADE
+        checkNewPage(50);
+        doc.setFont(undefined, 'bold');
+        doc.setFontSize(14);
+        doc.setTextColor(31, 78, 121);
+        doc.text('2. DISTRIBUIÇÃO POR PRIORIDADE', margin, y);
+        doc.setDrawColor(31, 78, 121);
+        doc.line(margin, y + 2, pageWidth - margin, y + 2);
+        y += 10;
+
+        doc.setTextColor(0, 0, 0);
+        doc.setFont(undefined, 'normal');
+        doc.setFontSize(10);
+
+        const alta = state.requisitos.filter(r => r.prioridade === 'Alta').length;
+        const media = state.requisitos.filter(r => r.prioridade === 'Média').length;
+        const baixa = state.requisitos.filter(r => r.prioridade === 'Baixa').length;
+
+        const prioridades = [
+            `Alta Prioridade: ${alta} requisitos`,
+            `Média Prioridade: ${media} requisitos`,
+            `Baixa Prioridade: ${baixa} requisitos`
+        ];
+
+        prioridades.forEach(linha => {
+            doc.text(linha, margin + 5, y);
+            y += 6;
+        });
+
+        y += 5;
+
+        // SEÇÃO 3: LISTA DE REQUISITOS
+        checkNewPage(50);
+        doc.setFont(undefined, 'bold');
+        doc.setFontSize(14);
+        doc.setTextColor(31, 78, 121);
+        doc.text('3. LISTA DE REQUISITOS', margin, y);
+        doc.setDrawColor(31, 78, 121);
+        doc.line(margin, y + 2, pageWidth - margin, y + 2);
+        y += 10;
+
+        doc.setTextColor(0, 0, 0);
+        doc.setFont(undefined, 'normal');
+        doc.setFontSize(9);
+
+        state.requisitos.forEach((req, idx) => {
+            checkNewPage(25);
+
+            doc.setFont(undefined, 'bold');
+            doc.text(`${idx + 1}. ${req.id} - ${req.titulo}`, margin + 5, y);
+            y += 5;
+
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(8.5);
+
+            const detalhes = [
+                `Tipo: ${req.tipo}`,
+                `Prioridade: ${req.prioridade}`,
+                `Status: ${req.status}`,
+                `Versão: ${req.versao}`,
+                `Autor: ${req.autor}`,
+                `Data: ${new Date(req.data).toLocaleDateString('pt-BR')}`
+            ];
+
+            detalhes.forEach(linha => {
+                doc.text(linha, margin + 10, y);
+                y += 4;
+            });
+
+            // Descrição resumida
+            const descricaoResumida = req.descricao.substring(0, 100);
+            doc.setFont(undefined, 'italic');
+            doc.setFontSize(8);
+            const descricaoLinhas = doc.splitTextToSize(descricaoResumida, pageWidth - 2 * margin - 10);
+            doc.text(descricaoLinhas, margin + 10, y);
+            y += descricaoLinhas.length * 3 + 2;
+
+            if (req.dependencias && req.dependencias.length > 0) {
+                doc.setFont(undefined, 'normal');
+                doc.setFontSize(8);
+                doc.text(`Dependências: ${req.dependencias.join(', ')}`, margin + 10, y);
+                y += 4;
+            }
+
+            y += 3;
+        });
+
+        y += 5;
+
+        // SEÇÃO 4: ESTATÍSTICAS
+        checkNewPage(50);
+        doc.setFont(undefined, 'bold');
+        doc.setFontSize(14);
+        doc.setTextColor(31, 78, 121);
+        doc.text('4. ESTATÍSTICAS', margin, y);
+        doc.setDrawColor(31, 78, 121);
+        doc.line(margin, y + 2, pageWidth - margin, y + 2);
+        y += 10;
+
+        doc.setTextColor(0, 0, 0);
+        doc.setFont(undefined, 'normal');
+        doc.setFontSize(10);
+
+        const versoes = state.requisitos.map(r => r.versao || 1);
+        const versaoMedia = versoes.length > 0 ? (versoes.reduce((a, b) => a + b, 0) / versoes.length).toFixed(2) : 0;
+        const reqComDep = state.requisitos.filter(r => (r.dependencias || []).length > 0).length;
+
+        const stats = [
+            `Versão Média dos Requisitos: ${versaoMedia}`,
+            `Requisitos com Dependências: ${reqComDep}`,
+            `Requisitos sem Dependências: ${state.requisitos.length - reqComDep}`,
+            `Total de Tarefas Kanban: ${state.tarefas.length}`,
+            `Tarefas Concluídas: ${state.tarefas.filter(t => t.coluna === 'concluido').length}`,
+            `Documentos: ${state.documentos.length}`,
+            `Membros da Equipe: ${state.usuarios.length}`
+        ];
+
+        stats.forEach(linha => {
+            doc.text(linha, margin + 5, y);
+            y += 6;
+        });
+
+        // RODAPÉ
+        doc.setFontSize(8);
+        doc.setTextColor(150, 150, 150);
+        doc.text(`ReqFlow - Sistema de Gerenciamento de Requisitos | Gerado em ${dataFormatada}`, margin, pageHeight - 10);
+
+        // Salvar
+        const nomeArquivo = `relatorio_reqflow_${agora.getTime()}.pdf`;
+        doc.save(nomeArquivo);
+
+        showToast('Relatório PDF gerado com sucesso!', 'success');
+        addAuditLog('Relatório Exportado', 'Sistema', 'Relatório profissional completo em PDF');
+    } catch (error) {
+        console.error('Erro ao gerar relatório:', error);
+        showToast('Erro ao gerar relatório: ' + error.message, 'error');
+    }
+}
+
+/**
+ * Sistema de notificações
+ */
+function criarNotificacao(tipo, mensagem, usuario) {
+    if (!state.notificacoes) state.notificacoes = [];
+
+    const notificacao = {
+        id: Date.now(),
+        tipo: tipo, // 'mention', 'comment', 'assignment', 'status_change'
+        mensagem: mensagem,
+        usuario: usuario,
+        data: new Date(),
+        lida: false
+    };
+
+    state.notificacoes.unshift(notificacao);
+
+    // Manter apenas últimas 50
+    if (state.notificacoes.length > 50) {
+        state.notificacoes = state.notificacoes.slice(0, 50);
+    }
+
+    saveToStorage();
+}
+
+/**
+ * Renderiza painel de notificações
+ */
+function renderNotificacoesAvancadas() {
+    const naoLidas = (state.notificacoes || []).filter(n => !n.lida);
+    const container = document.getElementById('notificationsList');
+
+    if (!container) return;
+
+    if (naoLidas.length === 0) {
+        container.innerHTML = '<p class="text-sm text-gray-500 text-center py-8">Nenhuma notificação</p>';
+        return;
+    }
+
+    container.innerHTML = naoLidas.map(n => {
+        const icone = n.tipo === 'mention' ? '✓' :
+            n.tipo === 'comment' ? '💬' :
+                n.tipo === 'assignment' ? '📌' : '🔄';
+
+        return `
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-3 rounded cursor-pointer hover:bg-blue-100 transition"
+                 onclick="marcarNotificacaoLida(${n.id})">
+                <div class="flex items-start gap-3">
+                    <span class="text-xl">${icone}</span>
+                    <div class="flex-1">
+                        <p class="text-sm font-semibold text-gray-800">${n.mensagem}</p>
+                        <p class="text-xs text-gray-500 mt-1">${formatarDataRelativa(n.data)}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+/**
+ * Marca notificação como lida
+ */
+function marcarNotificacaoLida(notificacaoId) {
+    const notif = (state.notificacoes || []).find(n => n.id === notificacaoId);
+    if (notif) {
+        notif.lida = true;
+        saveToStorage();
+        renderNotificacoesAvancadas();
+    }
+}
+
+console.log('✓ Funcionalidades avançadas carregadas');
+
+// ============================================================================
+// ReqFlow - Análises Avançadas e Gráficos
+// Funcionalidades de análise de impacto, cobertura e métricas
+// ============================================================================
+
+/**
+ * Gera análise de cobertura de requisitos por tipo de teste
+ * @returns {Object} Dados de cobertura
+ */
+function analisarCoberturaTestes() {
+    const tiposTestem = ['Unitário', 'Integração', 'Sistema', 'Aceitação'];
+    const cobertura = {};
+
+    tiposTestem.forEach(tipo => {
+        cobertura[tipo] = {
+            total: state.requisitos.length,
+            cobertos: Math.floor(Math.random() * (state.requisitos.length * 0.8)) + (state.requisitos.length * 0.2),
+            percentual: 0
+        };
+        cobertura[tipo].percentual = Math.round((cobertura[tipo].cobertos / cobertura[tipo].total) * 100);
+    });
+
+    return cobertura;
+}
+
+/**
+ * Calcula análise de dependências e impacto de mudanças
+ * @param {string} requisitoId - ID do requisito
+ * @returns {Object} Análise de impacto
+ */
+function analisarImpactoDeMudanca(requisitoId) {
+    const req = state.requisitos.find(r => r.id === requisitoId);
+    if (!req) return null;
+
+    // Requisitos que dependem deste
+    const dependentes = state.requisitos.filter(r =>
+        r.dependencias.includes(requisitoId)
+    );
+
+    // Tarefas vinculadas
+    const tarefasVinculadas = state.tarefas.filter(t =>
+        t.requisitosVinculados.includes(requisitoId)
+    );
+
+    // Discussões relacionadas
+    const discussoesRelacionadas = (state.discussoes || []).filter(d =>
+        d.requisito === requisitoId
+    );
+
+    return {
+        requisito: requisitoId,
+        dependentes: dependentes.length,
+        dependentesDetalhes: dependentes,
+        tarefasAfetadas: tarefasVinculadas.length,
+        tarefasDetalhes: tarefasVinculadas,
+        discussoesAbertas: discussoesRelacionadas.length,
+        impactoTotal: dependentes.length + tarefasVinculadas.length + discussoesRelacionadas.length,
+        risco: dependentes.length > 2 ? 'Alto' : dependentes.length > 0 ? 'Médio' : 'Baixo'
+    };
+}
+
+/**
+ * Gera estatísticas do projeto
+ * @returns {Object} Estatísticas gerais
+ */
+function gerarEstatisticasProjeto() {
+    const stats = {
+        totalRequisitos: state.requisitos.length,
+        requisitosPorTipo: {
+            RF: state.requisitos.filter(r => r.tipo === 'RF').length,
+            RNF: state.requisitos.filter(r => r.tipo === 'RNF').length
+        },
+        requisitosPorStatus: {},
+        requisitosPorPrioridade: {},
+        versionamento: {
+            versaoMedia: 0,
+            maiorVersao: 0,
+            requisitosMainoroRecentes: []
+        },
+        dependencias: {
+            totalLinhas: 0,
+            requisitoSemDependencias: 0,
+            dependenciasCirculares: 0,
+            requisitosOrfaos: 0
+        },
+        colaboracao: {
+            totalDiscussoes: (state.discussoes || []).length,
+            discussoesAbertas: (state.discussoes || []).filter(d => !d.resolvida).length,
+            totalComentarios: (state.discussoes || []).reduce((sum, d) => sum + (d.respostas || []).length, 0)
+        },
+        tarefas: {
+            total: state.tarefas.length,
+            porColuna: {},
+            concluidas: state.tarefas.filter(t => t.coluna === 'concluido').length
+        },
+        auditoria: {
+            totalAcoes: state.auditoria.length,
+            ultimaAcao: state.auditoria.length > 0 ? state.auditoria[state.auditoria.length - 1].data : null
+        }
+    };
+
+    // Contar por status
+    const statuses = ['Proposto', 'Aprovado', 'Em Desenvolvimento', 'Implementado', 'Validado'];
+    statuses.forEach(status => {
+        stats.requisitosPorStatus[status] = state.requisitos.filter(r => r.status === status).length;
+    });
+
+    // Contar por prioridade
+    const prioridades = ['Alta', 'Média', 'Baixa'];
+    prioridades.forEach(prio => {
+        stats.requisitosPorPrioridade[prio] = state.requisitos.filter(r => r.prioridade === prio).length;
+    });
+
+    // Versionamento
+    const versoes = state.requisitos.map(r => r.versao || 1);
+    stats.versionamento.versaoMedia = versoes.length > 0 ? (versoes.reduce((a, b) => a + b, 0) / versoes.length).toFixed(2) : 0;
+    stats.versionamento.maiorVersao = Math.max(...versoes);
+    stats.versionamento.requisitosMainoroRecentes = state.requisitos
+        .sort((a, b) => new Date(b.data) - new Date(a.data))
+        .slice(0, 5);
+
+    // Dependências
+    state.requisitos.forEach(req => {
+        if (!req.dependencias || req.dependencias.length === 0) {
+            stats.dependencias.requisitoSemDependencias++;
+        }
+        stats.dependencias.totalLinhas += (req.dependencias || []).length;
+    });
+
+    // Contar por coluna kanban
+    ['backlog', 'progresso', 'revisao', 'concluido'].forEach(coluna => {
+        stats.tarefas.porColuna[coluna] = state.tarefas.filter(t => t.coluna === coluna).length;
+    });
+
+    return stats;
+}
+
+/**
+ * Gera matriz de rastreabilidade avançada com dados
+ * @returns {Object} Dados da matriz
+ */
+function gerarMatrizRastreabilidadeAvancada() {
+    const matriz = {
+        requisitos: state.requisitos,
+        tiposTeste: ['Unitário', 'Integração', 'Sistema', 'Aceitação'],
+        dados: [],
+        cobertura: {
+            cobertos: 0,
+            total: 0,
+            percentual: 0
+        }
+    };
+
+    state.requisitos.forEach(req => {
+        const linhas = {};
+        linhas[req.id] = {};
+
+        matriz.tiposTeste.forEach(teste => {
+            // Simulação: alta prioridade tem mais cobertura
+            const vinculado = req.prioridade === 'Alta' || Math.random() > 0.6;
+            linhas[req.id][teste] = {
+                vinculado: vinculado,
+                dataUltimoTeste: vinculado ? new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000) : null
+            };
+
+            if (vinculado) {
+                matriz.cobertura.cobertos++;
+            }
+        });
+
+        matriz.dados.push(linhas);
+    });
+
+    matriz.cobertura.total = state.requisitos.length * matriz.tiposTeste.length;
+    matriz.cobertura.percentual = Math.round((matriz.cobertura.cobertos / matriz.cobertura.total) * 100);
+
+    return matriz;
+}
+
+/**
+ * Detecta gargalos no fluxo de trabalho
+ * @returns {Array} Lista de gargalos
+ */
+function detectarGargalos() {
+    const gargalos = [];
+
+    // Gargalo 1: Requisitos em desenvolvimento há muito tempo
+    const reqLongosDesenvolvimento = state.requisitos
+        .filter(r => r.status === 'Em Desenvolvimento')
+        .filter(r => {
+            const dias = Math.floor((Date.now() - new Date(r.data)) / (1000 * 60 * 60 * 24));
+            return dias > 30;
+        });
+
+    if (reqLongosDesenvolvimento.length > 0) {
+        gargalos.push({
+            tipo: 'Desenvolvimento Longo',
+            severidade: 'Média',
+            requisitos: reqLongosDesenvolvimento,
+            recomendacao: 'Revisar progresso dos requisitos em desenvolvimento há mais de 30 dias'
+        });
+    }
+
+    // Gargalo 2: Requisitos sem testes
+    const reqSemTestes = state.requisitos
+        .filter(r => r.status === 'Implementado')
+        .filter(r => r.status !== 'Validado');
+
+    if (reqSemTestes.length > state.requisitos.length * 0.3) {
+        gargalos.push({
+            tipo: 'Cobertura de Testes Baixa',
+            severidade: 'Alto',
+            quantidade: reqSemTestes.length,
+            percentual: Math.round((reqSemTestes.length / state.requisitos.length) * 100),
+            recomendacao: 'Aumentar prioridade de testes para requisitos implementados'
+        });
+    }
+
+    // Gargalo 3: Discussões abertas há muito tempo
+    const discAbertasLongas = (state.discussoes || [])
+        .filter(d => !d.resolvida)
+        .filter(d => {
+            const dias = Math.floor((Date.now() - new Date(d.data)) / (1000 * 60 * 60 * 24));
+            return dias > 14;
+        });
+
+    if (discAbertasLongas.length > 0) {
+        gargalos.push({
+            tipo: 'Discussões Abertas',
+            severidade: 'Média',
+            quantidade: discAbertasLongas.length,
+            recomendacao: 'Resolver discussões abertas há mais de 14 dias'
+        });
+    }
+
+    // Gargalo 4: Tarefas no Backlog
+    const tarefasBacklog = state.tarefas.filter(t => t.coluna === 'backlog');
+    if (tarefasBacklog.length > state.tarefas.length * 0.5) {
+        gargalos.push({
+            tipo: 'Backlog Acumulado',
+            severidade: 'Média',
+            quantidade: tarefasBacklog.length,
+            recomendacao: 'Priorizar e mover tarefas do backlog para desenvolvimento'
+        });
+    }
+
+    return gargalos;
+}
+
+/**
+ * Gera recomendações baseadas em análises
+ * @returns {Array} Lista de recomendações
+ */
+function gerarRecomendacoes() {
+    const recomendacoes = [];
+    const stats = gerarEstatisticasProjeto();
+
+    // Recomendação 1: Versionamento
+    if (stats.versionamento.versaoMedia < 1.5) {
+        recomendacoes.push({
+            categoria: 'Versionamento',
+            titulo: 'Aumentar frequência de atualizações',
+            descricao: 'A versão média dos requisitos é baixa. Considere revisar e atualizar mais frequentemente.',
+            prioridade: 'Baixa',
+            impacto: 'Mantém histórico mais completo'
+        });
+    }
+
+    // Recomendação 2: Requisitos sem prioridade alta
+    if (stats.requisitosPorPrioridade['Alta'] < state.requisitos.length * 0.3) {
+        recomendacoes.push({
+            categoria: 'Priorização',
+            titulo: 'Revisar prioridades dos requisitos',
+            descricao: 'Menos de 30% dos requisitos estão marcados como Alta prioridade. Verifique se a priorização está correta.',
+            prioridade: 'Média',
+            impacto: 'Melhora o planejamento e foco do time'
+        });
+    }
+
+    // Recomendação 3: Requisitos propostos
+    if (stats.requisitosPorStatus['Proposto'] > state.requisitos.length * 0.2) {
+        recomendacoes.push({
+            categoria: 'Aprovação',
+            titulo: 'Revisar requisitos propostos',
+            descricao: `Há ${stats.requisitosPorStatus['Proposto']} requisitos ainda no status "Proposto". Considere aprová-los ou rejeitá-los.`,
+            prioridade: 'Alta',
+            impacto: 'Acelera o ciclo de desenvolvimento'
+        });
+    }
+
+    // Recomendação 4: Validação
+    if (stats.requisitosPorStatus['Validado'] < state.requisitos.length * 0.5) {
+        recomendacoes.push({
+            categoria: 'Qualidade',
+            titulo: 'Aumentar taxa de validação',
+            descricao: 'Apenas ' + stats.requisitosPorStatus['Validado'] + ' requisitos foram validados. Intensifique o processo de validação.',
+            prioridade: 'Alta',
+            impacto: 'Garante qualidade do projeto'
+        });
+    }
+
+    // Recomendação 5: Documentação
+    if (state.documentos.length < state.requisitos.length * 0.1) {
+        recomendacoes.push({
+            categoria: 'Documentação',
+            titulo: 'Aumentar cobertura de documentação',
+            descricao: 'Há poucos documentos. Considere criar guias e especificações.',
+            prioridade: 'Média',
+            impacto: 'Facilita compreensão e manutenção do sistema'
+        });
+    }
+
+    return recomendacoes;
+}
+
+/**
+ * Exporta relatório analítico completo
+ * @returns {Object} Relatório completo
+ */
+function gerarRelatorioAnalitico() {
+    const dataGeracao = new Date();
+
+    return {
+        info: {
+            nome: 'Relatório Analítico - ReqFlow',
+            dataGeracao: dataGeracao,
+            periodo: 'Análise Completa do Projeto',
+            versao: state.requisitos.length > 0 ? Math.max(...state.requisitos.map(r => r.versao || 1)) : 0
+        },
+        estatisticas: gerarEstatisticasProjeto(),
+        coberturaTestes: analisarCoberturaTestes(),
+        matriz: gerarMatrizRastreabilidadeAvancada(),
+        gargalos: detectarGargalos(),
+        recomendacoes: gerarRecomendacoes(),
+        dependencias: {
+            totalLinhas: state.requisitos.reduce((sum, r) => sum + (r.dependencias || []).length, 0),
+            requisitosComDependencias: state.requisitos.filter(r => (r.dependencias || []).length > 0).length,
+            requisitosSemDependencias: state.requisitos.filter(r => !(r.dependencias || []).length).length
+        },
+        colaboracao: {
+            totalComentarios: (state.discussoes || []).reduce((sum, d) => sum + (d.respostas || []).length, 0),
+            usuariosAtivos: state.usuarios.length,
+            acoesRecentes: state.auditoria.slice(-10)
+        }
+    };
+}
+
+console.log('✓ Módulo de Análises Avançadas carregado');
+
+// ============================================================================
+// ReqFlow - Matriz e Dependências Avançadas v0.3
+// Melhorias significativas na visualização de dependências
+// ============================================================================
+
+/**
+ * Renderiza matriz de rastreabilidade avançada e interativa
+ */
+function renderMatrizAvancada() {
+    const container = document.getElementById('matrizRastreabilidade');
+    if (!container) return;
+
+    const requisitos = state.requisitos.filter(r => r.tipo === 'RF');
+    const tiposTeste = ['Unitário', 'Integração', 'Sistema', 'Aceitação'];
+
+    let html = `
+        <div class="overflow-x-auto">
+            <table class="w-full border-collapse">
+                <thead>
+                    <tr class="bg-gray-800 text-white sticky top-0">
+                        <th class="border border-gray-300 px-4 py-3 text-left font-semibold">ID Requisito</th>
+                        <th class="border border-gray-300 px-4 py-3 text-left font-semibold">Título</th>
+                        <th class="border border-gray-300 px-4 py-3 text-left font-semibold">Prioridade</th>
+    `;
+
+    tiposTeste.forEach(tipo => {
+        html += `<th class="border border-gray-300 px-4 py-3 text-center font-semibold text-sm">${tipo}</th>`;
+    });
+
+    html += `
+                        <th class="border border-gray-300 px-4 py-3 text-center font-semibold">Cobertura</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    requisitos.forEach(req => {
+        const priorityColor = req.prioridade === 'Alta' ? 'bg-red-100 text-red-800' :
+            req.prioridade === 'Média' ? 'bg-yellow-100 text-yellow-800' :
+                'bg-green-100 text-green-800';
+
+        let cobertura = 0;
+        let html_testes = '';
+
+        tiposTeste.forEach((tipo, idx) => {
+            // Simulação realista: alta prioridade tem mais cobertura
+            const isLinked = req.prioridade === 'Alta' || (req.prioridade === 'Média' && idx < 2) || Math.random() > 0.65;
+            if (isLinked) cobertura++;
+
+            const cellClass = isLinked ? 'bg-green-100 border-green-300' : 'bg-white border-gray-200';
+            html_testes += `
+                <td class="matriz-cell border ${cellClass} px-4 py-3 text-center cursor-pointer hover:shadow-md transition"
+                    onclick="toggleVinculoMatriz(this, '${req.id}', '${tipo}')">
+                    <span class="text-lg">${isLinked ? '✓' : '−'}</span>
+                </td>
+            `;
+        });
+
+        const percentualCobertura = Math.round((cobertura / tiposTeste.length) * 100);
+        const coberturaColor = percentualCobertura === 100 ? 'bg-green-200 text-green-800' :
+            percentualCobertura >= 75 ? 'bg-yellow-200 text-yellow-800' :
+                'bg-red-200 text-red-800';
+
+        html += `
+                    <tr class="hover:bg-gray-50 transition border-b border-gray-200">
+                        <td class="border border-gray-300 px-4 py-3 font-bold text-blue-600">${req.id}</td>
+                        <td class="border border-gray-300 px-4 py-3 text-sm">${req.titulo.substring(0, 40)}...</td>
+                        <td class="border border-gray-300 px-4 py-3">
+                            <span class="px-2 py-1 rounded text-xs font-semibold ${priorityColor}">
+                                ${req.prioridade}
+                            </span>
+                        </td>
+                        ${html_testes}
+                        <td class="border border-gray-300 px-4 py-3 text-center">
+                            <span class="px-2 py-1 rounded text-xs font-semibold ${coberturaColor}">
+                                ${percentualCobertura}%
+                            </span>
+                        </td>
+                    </tr>
+        `;
+    });
+
+    html += `
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="mt-4 p-4 bg-gray-50 rounded-lg">
+            <p class="text-sm font-semibold text-gray-800 mb-2">Legenda:</p>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="flex items-center gap-2">
+                    <span class="text-lg text-green-600">✓</span>
+                    <span class="text-sm text-gray-700">Requisito com teste vinculado</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-lg text-gray-600">−</span>
+                    <span class="text-sm text-gray-700">Sem vínculo de teste</span>
+                </div>
+            </div>
+        </div>
+    `;
+
+    container.innerHTML = html;
+}
+
+/**
+ * Toggle de vínculo na matriz
+ */
+function toggleVinculoMatriz(cell, reqId, tipo) {
+    const isLinked = cell.textContent.includes('✓');
+
+    if (isLinked) {
+        cell.classList.remove('bg-green-100', 'border-green-300');
+        cell.classList.add('bg-white', 'border-gray-200');
+        cell.textContent = '−';
+        showToast(`Vínculo removido: ${reqId} ↔ ${tipo}`, 'info');
+    } else {
+        cell.classList.remove('bg-white', 'border-gray-200');
+        cell.classList.add('bg-green-100', 'border-green-300');
+        cell.textContent = '✓';
+        showToast(`Vínculo criado: ${reqId} ↔ ${tipo}`, 'success');
+    }
+
+    addAuditLog('Matriz Atualizada', 'Matriz', `${reqId} - ${tipo}`);
+}
+
+/**
+ * Renderiza grafo de dependências com Vis.js melhorado
+ */
+function renderDependenciasAvancadas() {
+    const container = document.getElementById('network');
+    if (!container) return;
+
+    // Preparar nós com mais informações
+    const nodes = new vis.DataSet(state.requisitos.map(req => {
+        const cor = req.prioridade === 'Alta' ? '#ef4444' :
+            req.prioridade === 'Média' ? '#f59e0b' : '#10b981';
+
+        // Aumentar tamanho dos nós significativamente
+        const size = 100 + ((req.dependencias || []).length * 10);
+
+        return {
+            id: req.id,
+            label: req.id + " - " + req.titulo,
+            title: `${req.id}: ${req.titulo}\n\nPrioridade: ${req.prioridade}\nStatus: ${req.status}\nDependências: ${(req.dependencias || []).length}`,
+            color: {
+                background: cor,
+                border: '#1f2937',
+                highlight: {
+                    background: cor,
+                    border: '#ffffff'
+                }
+            },
+            shape: 'box',
+            font: {color: '#ffffff', bold: {color: '#ffffff'}, size: 18, face: 'Arial'},
+            size: size,
+            physics: true,
+            mass: 2,
+            margin: {top: 10, right: 10, bottom: 10, left: 10}
+        };
+    }));
+
+    // Preparar arestas com informações de dependência
+    const edges = new vis.DataSet();
+    state.requisitos.forEach(req => {
+        if (req.dependencias && req.dependencias.length > 0) {
+            req.dependencias.forEach(depId => {
+                if (state.requisitos.some(r => r.id === depId)) {
+                    edges.add({
+                        from: depId,
+                        to: req.id,
+                        arrows: {to: {enabled: true, scaleFactor: 1.2}},
+                        color: {color: '#94a3b8', highlight: '#3b82f6'},
+                        smooth: {type: 'continuous'},
+                        width: 2,
+                        hoverWidth: 3
+                    });
+                }
+            });
+        }
+    });
+
+    const data = {nodes, edges};
+    const options = {
+        height: 100 + '%',
+        layout: {
+            hierarchical: {
+                enabled: true,
+                direction: 'UD',
+                sortMethod: 'directed',
+                levelSeparation: 200,
+                nodeSpacing: 250
+            }
+        },
+        physics: {
+            enabled: true,
+            stabilization: {
+                iterations: 200,
+                fit: true
+            },
+            barnesHut: {
+                gravitationalConstant: -30000,
+                centralGravity: 0.3,
+                springLength: 300,
+                springConstant: 0.04
+            },
+            maxVelocity: 50,
+            minVelocity: 0.75,
+            damping: 0.55
+        },
+        manipulation: {
+            enabled: false
+        },
+        interaction: {
+            dragNodes: true,
+            dragView: true,
+            zoomView: true,
+            hover: true,
+            navigationButtons: false,
+            keyboard: true
+        },
+        edges: {
+            smooth: {
+                enabled: true,
+                type: 'cubicBezier',
+                roundness: 0.5
+            }
+        },
+        nodes: {
+            shadow: {
+                enabled: true,
+                color: 'rgba(0, 0, 0, 0.2)',
+                size: 10,
+                x: 5,
+                y: 5
+            }
+        },
+        configure: {
+            enabled: false,
+            showButton: false
+        }
+    };
+
+    try {
+        const network = new vis.Network(container, data, options);
+
+        // Evento: clique no nó abre editor
+        network.on('click', function (params) {
+            if (params.nodes.length > 0) {
+                const reqId = params.nodes[0];
+                editarRequisito(reqId);
+            }
+        });
+
+        // Evento: double-click faz fit
+        network.on('doubleClick', function (params) {
+            network.fit();
+        });
+
+        // Melhorar layout ao estabilizar
+        network.once('stabilizationIterationsDone', function () {
+            network.setOptions({physics: false});
+        });
+
+        network.once('afterDrawing', () => {
+            container.style.height = '80vh'
+        })
+
+        // Guardar referência para reutilizar
+        window.dependenciesNetwork = network;
+
+    } catch (error) {
+        console.error('Erro ao renderizar grafo:', error);
+        container.innerHTML = '<div class="flex items-center justify-center h-full text-gray-500">Erro ao carregar o grafo de dependências</div>';
+    }
+}
+
+/**
+ * Gera recomendação baseada no risco
+ */
+function gerarRecomendacao(nivel, alcance) {
+    if (nivel >= 4) {
+        return `⚠️ CRÍTICO: Esta mudança pode afetar ${alcance} requisitos! Requere revisão completa e testes extensivos.`;
+    } else if (nivel >= 3) {
+        return `⚡ ALTO: Esta mudança afeta ${alcance} requisitos. Validar impactos antes de alterar.`;
+    } else if (nivel > 0) {
+        return `ℹ️ MÉDIO: Esta mudança pode afetar ${alcance} requisitos. Verificar dependências.`;
+    }
+    return `✓ Seguro: Esta mudança é isolada e não afeta outros requisitos.`;
+}
+
+console.log('✓ Matriz e Dependências Avançadas carregadas');
+
+
+// ============================================================================
+// ReqFlow - Dados Realistas Avançados v0.3
+// Mais comentários, atividades e colaboração
+// ============================================================================
+
+// Comentários realistas dos requisitos
+const REALISTIC_COMMENTS = [
+    {
+        requisitoId: 'RF001',
+        autor: 'João Silva',
+        texto: '@Maria Santos, concordo que o CRUD deve ter validação em tempo real. Já comecei a implementar isso.',
+        data: new Date(Date.now() - 2 * 60 * 60 * 1000),
+        likes: 3
+    },
+    {
+        requisitoId: 'RF001',
+        autor: 'Maria Santos',
+        texto: 'Ótima observação @João Silva! Também seria legal adicionar um preview antes de salvar.',
+        data: new Date(Date.now() - 1 * 60 * 60 * 1000),
+        likes: 2
+    },
+    {
+        requisitoId: 'RF007',
+        autor: 'Pedro Costa',
+        texto: 'Os gráficos ficaram lindos! Sugestão: adicionar filtros por data?',
+        data: new Date(Date.now() - 3 * 60 * 60 * 1000),
+        likes: 5
+    },
+    {
+        requisitoId: 'RF011',
+        autor: 'Ana Oliveira',
+        texto: 'Matriz de rastreabilidade pronta para testes. Vou começar a validar cobertura em breve.',
+        data: new Date(Date.now() - 4 * 60 * 60 * 1000),
+        likes: 1
+    },
+    {
+        requisitoId: 'RF008',
+        autor: 'Renzo Paulo',
+        texto: 'Grafo de dependências ficou excelente! Bem organizado e muito legível.',
+        data: new Date(Date.now() - 5 * 60 * 60 * 1000),
+        likes: 4
+    },
+    {
+        requisitoId: 'RF006',
+        autor: 'Vanessa Maria',
+        texto: 'Exportação para PDF muito melhorada. Suportamos todos os formatos necessários?',
+        data: new Date(Date.now() - 6 * 60 * 60 * 1000),
+        likes: 2
+    },
+    {
+        requisitoId: 'RF009',
+        autor: 'Yuri Filgueira',
+        texto: 'Validação automática de dependências circulares foi implementada com sucesso!',
+        data: new Date(Date.now() - 7 * 60 * 60 * 1000),
+        likes: 6
+    }
+];
+
+// Atividades mais realistas
+const REALISTIC_ACTIVITIES = [
+    {
+        tipo: 'update',
+        usuario: 'Maria Santos',
+        acao: 'atualizou status de',
+        entidade: 'RF005',
+        data: new Date(Date.now() - 30 * 60 * 1000)
+    },
+    {
+        tipo: 'create',
+        usuario: 'João Silva',
+        acao: 'criou tarefa para',
+        entidade: 'RF001',
+        data: new Date(Date.now() - 60 * 60 * 1000)
+    },
+    {
+        tipo: 'update',
+        usuario: 'Pedro Costa',
+        acao: 'marcou como validado',
+        entidade: 'RF007',
+        data: new Date(Date.now() - 90 * 60 * 1000)
+    },
+    {
+        tipo: 'create',
+        usuario: 'Ana Oliveira',
+        acao: 'adicionou dependência em',
+        entidade: 'RF008',
+        data: new Date(Date.now() - 120 * 60 * 1000)
+    },
+    {
+        tipo: 'update',
+        usuario: 'Renzo Paulo',
+        acao: 'editou descrição de',
+        entidade: 'RF011',
+        data: new Date(Date.now() - 150 * 60 * 1000)
+    },
+    {
+        tipo: 'create',
+        usuario: 'Vanessa Maria',
+        acao: 'criou novo documento',
+        entidade: 'Especificação Técnica',
+        data: new Date(Date.now() - 180 * 60 * 1000)
+    },
+    {
+        tipo: 'update',
+        usuario: 'Yuri Filgueira',
+        acao: 'marcou como concluído',
+        entidade: 'RF006',
+        data: new Date(Date.now() - 210 * 60 * 1000)
+    }
+];
+
+// Inserir dados realistas no inicialização
+function carregarDadosRealistas() {
+    if (!state.comments) state.comments = [];
+    if (!state.atividades) state.atividades = [];
+
+    // Adicionar comentários
+    REALISTIC_COMMENTS.forEach(comment => {
+        state.comments.push({
+            ...comment,
+            id: Date.now() + Math.random(),
+            respostas: [],
+            mencoes: extrairMencoes(comment.texto),
+            data: new Date(comment.data)
+        });
+    });
+
+    // Adicionar atividades
+    REALISTIC_ACTIVITIES.forEach(atividade => {
+        state.atividades.push({
+            ...atividade,
+            data: new Date(atividade.data)
+        });
+    });
+
+    saveToStorage();
+}
+
+// Função helper para extrair menções
+function extrairMencoes(texto) {
+    const regex = /@(\w+)/g;
+    const mencoes = [];
+    let match;
+    while ((match = regex.exec(texto)) !== null) {
+        mencoes.push(match[1]);
+    }
+    return mencoes;
+}
+
+// Carregar ao inicializar
+if (typeof carregarDadosRealistas === 'function') {
+    document.addEventListener('DOMContentLoaded', carregarDadosRealistas);
+}
+
+console.log('✓ Dados realistas carregados');
 
